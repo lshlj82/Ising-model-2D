@@ -216,7 +216,7 @@ button.theme-btn svg{width:20px; height:20px; fill:none; stroke:currentColor; st
   <div class="eq">m<sub>0</sub> = [1 − sinh<sup>−4</sup>(2K)]<sup>1/8</sup> ≈ [4<span class="rad"><span class="rs">√</span><span class="rc">2</span></span> ln(1 + <span class="rad"><span class="rs">√</span><span class="rc">2</span></span>)]<sup>1/8</sup> [(T<sub>c</sub> − T)/T<sub>c</sub>]<sup>1/8</sup>,  ε = −J coth(2K)[1 + (2/π)κ′F(κ)]</div>
   <div class="eq">c/k<sub>B</sub> = (4/π)K² coth²(2K){F(κ) − E(κ) − sech²(2K)[π/2 + κ′F(κ)]},  κ′ = 2 tanh²(2K) − 1</div>
   <p class="prose">F and E are the complete elliptic integrals of the first and second kind. At T<sub>c</sub>, κ = 1 and F diverges logarithmically, while κ′ changes sign, putting a kink in ε. So c ≈ −(8/π)K<sub>c</sub>² ln|t| + constant with t = (T − T<sub>c</sub>)/T<sub>c</sub>: α = 0, but now a logarithmic divergence rather than a jump. χ is not known exactly because Z is not known for H ≠ 0, but χ ≈ Γ<sup>±</sup>|t|<sup>−7/4</sup> with Γ<sup>+</sup> ≈ 0.42420 and Γ<sup>−</sup> ≈ 0.011254, so Γ<sup>+</sup>/Γ<sup>−</sup> ≈ 37.69, far from the mean-field 2.</p>
-  <p class="prose">The simulations below sample microstates with the Boltzmann weight (Wolff cluster updates at H = 0) on L × L lattices. For finite N the system stays ergodic, so ⟨m⟩ = 0; they therefore record ⟨|M|⟩/N, and use k<sub>B</sub>Tχ = (⟨M²⟩ − ⟨|M|⟩²)/N and k<sub>B</sub>T²c = (⟨E²⟩ − ⟨E⟩²)/N.</p>
+  <p class="prose">The simulations below sample microstates with the Boltzmann weight (Wolff cluster updates at H = 0) on L × L lattices. For finite N the system stays ergodic, so ⟨m⟩ = 0; they therefore record ⟨|M|⟩/N. Below T<sub>c</sub> the susceptibility is taken as k<sub>B</sub>Tχ<sub>abs</sub> = (⟨M²⟩ − ⟨|M|⟩²)/N, which removes the flips between the two ordered states and approximates the response within one phase when L ≫ ξ; above T<sub>c</sub> the standard k<sub>B</sub>Tχ = (⟨M²⟩ − ⟨M⟩²)/N is used, since ⟨|M|⟩² does not vanish even for the symmetric high-temperature distribution and χ<sub>abs</sub> would lie systematically below Γ<sup>+</sup>|t|<sup>−7/4</sup>. Specific heat: k<sub>B</sub>T²c = (⟨E²⟩ − ⟨E⟩²)/N. Each Wolff measurement follows a fixed number of cluster updates (≈ N/⟨C⟩, calibrated during 200 equilibration sweeps and then frozen), not a fixed number of flipped sites, which would make the measurement time depend on the state and bias the averages.</p>
   <div class="status">
     <span id="chips" class="row" style="gap:14px"></span>
     <span class="bar" aria-hidden="true"><i id="prog"></i></span>
@@ -227,7 +227,7 @@ button.theme-btn svg{width:20px; height:20px; fill:none; stroke:currentColor; st
   <div class="figs">
     <figure><figcaption><b>Spontaneous magnetization</b>Dots: ⟨|M|⟩/N for each L. Dashed: Onsager–Yang m<sub>0</sub>(T).</figcaption><canvas id="s1"></canvas></figure>
     <figure><figcaption><b>m<sub>0</sub> ∝ (−t)<sup>β</sup>, β = 1/8</b>Log–log. Line: exact. The dots flatten close to T<sub>c</sub>, a finite-size effect once ξ grows past L.</figcaption><canvas id="s2"></canvas></figure>
-    <figure><figcaption><b>χ ∝ |t|<sup>−γ</sup>, γ = 7/4</b>Log–log. Dots above T<sub>c</sub> (blue) and below (red) for the largest L. Dashed: Γ<sup>±</sup>|t|<sup>−7/4</sup>, a factor 37.7 apart.</figcaption><canvas id="s3"></canvas></figure>
+    <figure><figcaption><b>χ ∝ |t|<sup>−γ</sup>, γ = 7/4</b>Log–log. Dots above T<sub>c</sub> (blue, standard χ) and below (red, χ<sub>abs</sub>) for the largest L. Dashed: Γ<sup>±</sup>|t|<sup>−7/4</sup>, a factor 37.7 apart.</figcaption><canvas id="s3"></canvas></figure>
     <figure><figcaption><b>Energy per spin ε(T)</b>Dashed: exact. It runs from −2J at T = 0 to 0 at T = ∞, with a kink at T<sub>c</sub>.</figcaption><canvas id="s4"></canvas></figure>
     <figure><figcaption><b>Specific heat c(T)</b>Dashed: exact, with a sharp logarithmic peak at T<sub>c</sub>; the simulations are almost indistinguishable away from it.</figcaption><canvas id="s5"></canvas></figure>
     <figure><figcaption><b>The logarithmic divergence of c</b>Exact c against |t| on a log scale, above (blue) and below (red) T<sub>c</sub>: straight lines with slope −(8/π)K<sub>c</sub>² ≈ −0.494 per unit of ln|t|.</figcaption><canvas id="s6"></canvas></figure>
@@ -491,14 +491,21 @@ function wolffFlip(s,L,padd,stack){
     if (s[nb3]===sp && Math.random()<padd){ s[nb3]=-sp; stack[top++]=nb3; c++; } }
   return c;
 }
-function wolffSweep(s,L,T,stack){ const N=L*L, padd=1-Math.exp(-2/T); let f=0; while (f<N) f+=wolffFlip(s,L,padd,stack); }
+/* Wolff measurements are taken after a FIXED number k of cluster updates. Stopping once the flipped sites add up to N
+   makes the measurement time depend on the state and biases the averages (4 × 4 at T_c: ε = −1.760 instead of the exact
+   −1.5656). wolffSweep (flip until N sites have flipped) is therefore used only to equilibrate and to calibrate
+   k ≈ N/⟨C⟩ for the current (L, T); k is then frozen, and the flipped sites / N are kept only as a work clock. */
+function wolffSweep(s,L,T,stack){ const N=L*L, padd=1-Math.exp(-2/T); let f=0, c=0; while (f<N){ f+=wolffFlip(s,L,padd,stack); c++; } return c; }
+function wolffUpdates(s,L,T,stack,k){ const padd=1-Math.exp(-2/T); let f=0; for (let i=0;i<k;i++) f+=wolffFlip(s,L,padd,stack); return f; }
 function measure(s,L,H){ let M=0, B=0; for (let y=0;y<L;y++){ const row=y*L, dn=((y+1)%L)*L; for (let x=0;x<L;x++){ const sp=s[row+x]; M+=sp; B+=sp*(s[row+(x+1)%L]+s[dn+x]); } } const N=L*L; return {m:M/N, e:(-B-H*M)/N}; }
 
 /* ---------- live lattice ---------- */
 const LV={L:128,tr:1,H:0,alg:'metro',spf:0.25,running:true};
 let LS=null, stackLive=null;
-function liveReset(kind){ LS={s:mkLattice(LV.L,kind),sweeps:0,ts:[],hist:new Float64Array(81),hn:0,corr:new Float64Array(LV.L/2+1),cn:0,mabs:0,mn:0,frame:0}; stackLive=new Int32Array(LV.L*LV.L); if (!LV.running && C.panel){ renderSpins(); liveCharts(); } }
-function liveStats(){ LS.sweeps=0; LS.ts=[]; LS.hist.fill(0); LS.hn=0; LS.corr=new Float64Array(LV.L/2+1); LS.cn=0; LS.mabs=0; LS.mn=0; }
+/* Instantaneous m and ε (LS.q) are recomputed from the current lattice and H whenever it or the field changes, also while
+   paused; the time averages are cleared and shown as '–' until the first new measurement. */
+function liveReset(kind){ LS={s:mkLattice(LV.L,kind),sweeps:0,ts:[],hist:new Float64Array(81),hn:0,corr:new Float64Array(LV.L/2+1),cn:0,mabs:0,mn:0,frame:0,wk:0,flips:0}; LS.q=measure(LS.s,LV.L,LV.H); stackLive=new Int32Array(LV.L*LV.L); if (!LV.running && C.panel){ renderSpins(); liveCharts(); liveRead(); } }
+function liveStats(){ LS.sweeps=0; LS.ts=[]; LS.hist.fill(0); LS.hn=0; LS.corr=new Float64Array(LV.L/2+1); LS.cn=0; LS.mabs=0; LS.mn=0; LS.wk=0; LS.flips=0; LS.q=measure(LS.s,LV.L,LV.H); if (!LV.running && C.panel) liveCharts(); }
 /* g(r) along the lattice axes, Σ_x,y s(x,y)[s(x+r,y) + s(x,y+r)] for every r = 0…L/2 at once. The direct double
    loop costs O(N·L) = O(N^(3/2)); here the power spectra |FFT|² of all rows and all columns are summed and
    transformed back once (Wiener–Khinchin, circular = periodic boundaries), O(N log L), same values to round-off. */
@@ -546,7 +553,8 @@ function liveFrame(){
   raf=0; if (!active()) return;
   if (LS && (LV.acc=(LV.acc||0)+LV.spf)>=1){
     const T=LV.tr*TC, useW=LV.alg==='wolff'&&LV.H===0, nS=Math.floor(LV.acc); LV.acc-=nS;
-    for (let k=0;k<nS;k++){ if (useW) wolffSweep(LS.s,LV.L,T,stackLive); else metroSweep(LS.s,LV.L,T,LV.H); LS.sweeps++; }
+    if (useW && !LS.wk){ let c=0; for (let k=0;k<5;k++) c+=wolffSweep(LS.s,LV.L,T,stackLive); LS.wk=Math.max(1,Math.round(c/5)); }   // calibrate k, not measured
+    for (let k=0;k<nS;k++){ if (useW) LS.flips+=wolffUpdates(LS.s,LV.L,T,stackLive,LS.wk); else metroSweep(LS.s,LV.L,T,LV.H); LS.sweeps++; }
     const q=measure(LS.s,LV.L,LV.H); LS.q=q;
     LS.ts.push(q.m); if (LS.ts.length>600) LS.ts.shift();
     LS.hist[Math.min(80,Math.max(0,Math.round((q.m+1)*40)))]++; LS.hn++; LS.mabs+=Math.abs(q.m); LS.mn++;
@@ -558,8 +566,9 @@ function liveFrame(){
 function liveRead(){
   const T=LV.tr*TC; $('tOut').textContent=LV.tr.toFixed(3); $('hOut').textContent=LV.H.toFixed(2);
   $('rT').textContent=T.toFixed(3); $('rM0').textContent= T<TC ? '±'+m0(T).toFixed(4) : '0';
-  if (LS && LS.q){ $('rM').textContent=LS.q.m.toFixed(4); $('rE').textContent=LS.q.e.toFixed(4); $('rMa').textContent=(LS.mabs/LS.mn).toFixed(4); }
-  $('rSw').textContent=LS?LS.sweeps:0;
+  if (LS && LS.q){ $('rM').textContent=LS.q.m.toFixed(4); $('rE').textContent=LS.q.e.toFixed(4); }
+  $('rMa').textContent= LS && LS.mn ? (LS.mabs/LS.mn).toFixed(4) : '– (no measurement yet)';
+  $('rSw').textContent= !LS ? 0 : LS.wk && LS.flips ? `${LS.sweeps} × ${LS.wk} clusters (${(LS.flips/(LV.L*LV.L)).toFixed(1)} N flipped)` : LS.sweeps;
   $('spinNote').textContent=`Up spins are white and down spins are black, as in the lecture notes. ${LV.L} × ${LV.L}, periodic boundaries.${LV.alg==='wolff'&&LV.H!==0?' The Wolff rule needs H = 0, so Metropolis is used while the field is on.':''}`;
 }
 
@@ -569,8 +578,8 @@ function setTr(v){ LV.tr=+v; $('tSl').value=LV.tr; document.querySelectorAll('[d
 /* ---------- sweep at H = 0 (Wolff) ---------- */
 const SIZES=[16,32,64], RATIOS=[0.6,0.7,0.8,0.85,0.9,0.93,0.95,0.97,0.98,0.99,1,1.01,1.02,1.03,1.05,1.07,1.1,1.15,1.2,1.3,1.5,1.8,2.2,3];
 const EQ=200; let BASE=1500, sw=[];
-function makeSweep(){ sw=[]; SIZES.forEach(L=>RATIOS.forEach(r=>sw.push({kind:'s',L,r,T:r*TC,s:mkLattice(L,r<1?'up':'random'),stack:new Int32Array(L*L),eq:0,cnt:0,a:0,m2:0,e:0,e2:0}))); }
-function swStep(st){ wolffSweep(st.s,st.L,st.T,st.stack); if (st.eq<EQ){ st.eq++; return; } const q=measure(st.s,st.L,0), ma=Math.abs(q.m); st.a+=ma; st.m2+=q.m*q.m; st.e+=q.e; st.e2+=q.e*q.e; st.cnt++; }
+function makeSweep(){ sw=[]; SIZES.forEach(L=>RATIOS.forEach(r=>sw.push({kind:'s',L,r,T:r*TC,s:mkLattice(L,r<1?'up':'random'),stack:new Int32Array(L*L),eq:0,cnt:0,a:0,mm:0,m2:0,e:0,e2:0}))); }
+function swStep(st){ if (st.eq<EQ){ st.cl=(st.cl||0)+wolffSweep(st.s,st.L,st.T,st.stack); if (++st.eq===EQ) st.k=Math.max(1,Math.round(st.cl/EQ)); return; } wolffUpdates(st.s,st.L,st.T,st.stack,st.k); const q=measure(st.s,st.L,0), ma=Math.abs(q.m); st.a+=ma; st.mm+=q.m; st.m2+=q.m*q.m; st.e+=q.e; st.e2+=q.e*q.e; st.cnt++; }
 /* ---------- Widom collapse with a field (Metropolis) ---------- */
 const WL=64, WT=[-0.2,-0.12,-0.08,-0.05,-0.03,0.03,0.05,0.08,0.12,0.2], WH=[0.003,0.01,0.03,0.1], WEQ=400; let WBASE=1200, wd=[];
 function makeWidom(){ wd=[]; WT.forEach(t=>WH.forEach(h=>{ const T=TC*(1+t); wd.push({kind:'w',t,h,T,H:h*T,s:mkLattice(WL,'up'),eq:0,cnt:0,m:0}); })); }
@@ -601,8 +610,11 @@ function drawSweep(){
   SIZES.forEach(L=>s2.push({dots:true,r:3.5,color:LCOL(L),pts:by(L).filter(s=>s.r<1).map(s=>[1-s.r,s.a/s.cnt])}));
   plot($('s2'),{x:[1e-4,1],logx:true,logy:true,y:[0.25,1.1],series:s2,xlabel:'(T_c − T)/T_c',ylabel:'⟨|M|⟩/N'});
   const big=by(64), N=64*64;
-  const chi=s=>N*(s.m2/s.cnt-(s.a/s.cnt)**2)/s.T;
-  plot($('s3'),{x:[1e-3,3],logx:true,logy:true,series:[{dots:true,r:4,color:C.accent,pts:big.filter(s=>s.r>1).map(s=>[s.r-1,chi(s)])},{dots:true,r:4,color:C.crit,pts:big.filter(s=>s.r<1).map(s=>[1-s.r,chi(s)])},{color:C.accent,dash:[6,4],width:1.1,noScale:true,pts:xs.map(x=>[x,GP*Math.pow(x,-1.75)])},{color:C.crit,dash:[6,4],width:1.1,noScale:true,pts:xs.map(x=>[x,GM*Math.pow(x,-1.75)])}],xlabel:'|t| = |T − T_c|/T_c',ylabel:'χ(T, 0)'});
+  /* Γ± compare with different observables on each side: above T_c the standard response χ = N(⟨m²⟩ − ⟨m⟩²)/k_BT
+     (⟨m⟩ → 0 by symmetry); below T_c χ_abs = N(⟨m²⟩ − ⟨|m|⟩²)/k_BT, the single-phase response when L ≫ ξ. Using χ_abs
+     above T_c would subtract ⟨|m|⟩² ≠ 0 of a symmetric distribution and fall systematically below Γ⁺|t|^−7/4. */
+  const chi=s=>N*(s.m2/s.cnt-(s.mm/s.cnt)**2)/s.T, chiAbs=s=>N*(s.m2/s.cnt-(s.a/s.cnt)**2)/s.T;
+  plot($('s3'),{x:[1e-3,3],logx:true,logy:true,series:[{dots:true,r:4,color:C.accent,pts:big.filter(s=>s.r>1).map(s=>[s.r-1,chi(s)])},{dots:true,r:4,color:C.crit,pts:big.filter(s=>s.r<1).map(s=>[1-s.r,chiAbs(s)])},{color:C.accent,dash:[6,4],width:1.1,noScale:true,pts:xs.map(x=>[x,GP*Math.pow(x,-1.75)])},{color:C.crit,dash:[6,4],width:1.1,noScale:true,pts:xs.map(x=>[x,GM*Math.pow(x,-1.75)])}],xlabel:'|t| = |T − T_c|/T_c',ylabel:'χ (T > T_c), χ_{abs} (T < T_c)'});
   plot($('s4'),{x:[0.3,3.1],y:[-2.05,0],series:s4,vlines:vl,xlabel:'T/T_c',ylabel:'ε/J'});
   plot($('s5'),{x:[0.3,3.1],y:[0,3.2],series:s5,vlines:vl,xlabel:'T/T_c',ylabel:'c/k_B'});
   const ts=Array.from({length:120},(_,i)=>Math.pow(10,-6+i*5.5/119));
@@ -687,7 +699,7 @@ const io=new IntersectionObserver(es=>{ es.forEach(e=>onScreen.set(e.target,e.is
 document.addEventListener('visibilitychange',kick);
 RM.addEventListener('change',e=>{ if (e.matches) setRun(false); });
 $('rnd').onclick=()=>liveReset('random'); $('allUp').onclick=()=>liveReset('up'); $('allDn').onclick=()=>liveReset('down');
-$('run').onclick=()=>{ if (running){ running=false; $('run').textContent='Resume'; } else start(); };
+$('run').onclick=()=>{ if (running){ running=false; $('run').textContent='Resume'; $('stTxt').textContent=pick()?'Paused':'Done'; } else { start(); $('stTxt').textContent=pick()?'Sampling…':'Done'; } };
 $('more').onclick=()=>{ BASE*=2; WBASE*=2; start(); };
 ['wB','wD'].forEach(id=>$(id).addEventListener('input',drawWidom));
 $('wExact').onclick=()=>{ $('wB').value=0.125; $('wD').value=1.875; drawWidom(); };
