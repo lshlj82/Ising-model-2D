@@ -2,6 +2,24 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<!-- lang-toggle:head -->
+<script>(function(){var l='en';try{if(localStorage.getItem('lshlj82-demo-lang')==='ko')l='ko'}catch(e){}window.LANG=l;document.documentElement.dataset.lang=l;window.tr=function(en,ko){return window.LANG==='ko'&&ko!=null?ko:en};})();</script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap">
+<style>
+#langBtn{position:fixed;z-index:21;top:calc(env(safe-area-inset-top,0px) + 12px);right:calc(env(safe-area-inset-right,0px) + 60px);
+  min-width:40px;height:40px;padding:0 10px;border-radius:20px;display:grid;place-items:center;cursor:pointer;font:600 14px/1 system-ui,-apple-system,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;
+  background:var(--lb-bg,rgba(255,255,255,.92));color:var(--lb-fg,#1d2633);border:1px solid var(--lb-bd,rgba(20,30,45,.18));box-shadow:0 1px 4px rgba(0,0,0,.12)}
+#langBtn:hover{border-color:currentColor}
+#langBtn:focus-visible{outline:2px solid #3b82f6;outline-offset:2px}
+:root[data-theme="dark"] #langBtn{--lb-bg:rgba(22,28,38,.92);--lb-fg:#e8eef6;--lb-bd:rgba(255,255,255,.18)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) #langBtn{--lb-bg:rgba(22,28,38,.92);--lb-fg:#e8eef6;--lb-bd:rgba(255,255,255,.18)}}
+:root[data-lang="ko"] body{word-break:keep-all}
+:root[data-lang="ko"]{--sans:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;--serif:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;--ui-font:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif}
+:root[data-lang="ko"] body{font-family:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif}
+
+@media print{#langBtn{display:none}}
+</style>
+<!-- lang-toggle:head-end -->
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>The two-dimensional Ising model</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -162,9 +180,9 @@ button.theme-btn svg{width:20px; height:20px; fill:none; stroke:currentColor; st
 <div class="wrap">
 
 <header>
-  <h1>The two-dimensional Ising model</h1>
-  <p class="lede">On the square lattice the Ising model has a genuine phase transition at T<sub>c</sub> = 2J/[k<sub>B</sub> ln(1 + <span class="rad"><span class="rs">√</span><span class="rc">2</span></span>)] ≈ 2.269J/k<sub>B</sub>, solved exactly by Onsager in 1944. Its exponents, β = 1/8, γ = 7/4 and α = 0 with a logarithmic divergence, are far from mean field. Explore the exact results against simulations, Peierls’ argument for why d = 2 orders while d = 1 cannot, Widom’s scaling ansatz and data collapse, the scaling relations among the exponents, and the Ginzburg criterion that makes d = 4 the upper critical dimension.</p>
-  <p class="note" style="margin-top:6px">Based on lecture notes by Sang Hoon Lee for Chapter 2, following K. Christensen and N. R. Moloney, <i>Complexity and Criticality</i> (2005). Units: k<sub>B</sub> = 1 and J = 1. <a href="#references" style="color:var(--accent)">References</a></p>
+  <h1 data-k="k1">The two-dimensional Ising model</h1>
+  <p class="lede" data-k="k2">On the square lattice the Ising model has a genuine phase transition at T<sub>c</sub> = 2J/[k<sub>B</sub> ln(1 + <span class="rad"><span class="rs">√</span><span class="rc">2</span></span>)] ≈ 2.269J/k<sub>B</sub>, solved exactly by Onsager in 1944. Its exponents, β = 1/8, γ = 7/4 and α = 0 with a logarithmic divergence, are far from mean field. Explore the exact results against simulations, Peierls’ argument for why d = 2 orders while d = 1 cannot, Widom’s scaling ansatz and data collapse, the scaling relations among the exponents, and the Ginzburg criterion that makes d = 4 the upper critical dimension.</p>
+  <p class="note" style="margin-top:6px" data-k="k3">Based on lecture notes by Sang Hoon Lee for Chapter 2, following K. Christensen and N. R. Moloney, <i>Complexity and Criticality</i> (2005). Units: k<sub>B</sub> = 1 and J = 1. <a href="#references" style="color:var(--accent)">References</a></p>
 </header>
 
 <div class="hero">
@@ -181,161 +199,161 @@ button.theme-btn svg{width:20px; height:20px; fill:none; stroke:currentColor; st
     <div class="btns" aria-label="Temperature presets">
       <button data-t="0.7">0.7</button><button data-t="0.99">0.99</button><button data-t="1">1 (T<sub>c</sub>)</button><button data-t="1.2">1.2</button><button data-t="1.5">1.5</button><button data-t="4">4</button>
     </div>
-    <div class="sl" style="margin:4px 0 0"><label for="hSl">External field H</label><output id="hOut"></output><input type="range" id="hSl" min="-1" max="1" step="0.01" value="0"></div>
+    <div class="sl" style="margin:4px 0 0"><label for="hSl" data-k="k4">External field H</label><output id="hOut"></output><input type="range" id="hSl" min="-1" max="1" step="0.01" value="0"></div>
     <div class="row" style="gap:16px">
-      <div class="field"><label class="lab" for="lSel">Lattice</label><select id="lSel"><option value="8">8 × 8</option><option value="16">16 × 16</option><option value="32">32 × 32</option><option value="64">64 × 64</option><option value="128" selected>128 × 128</option><option value="256">256 × 256</option></select></div>
-      <div class="field"><label class="lab" for="aSel">Update rule</label><select id="aSel"><option value="metro" selected>Metropolis (single spins)</option><option value="wolff">Wolff (clusters, H = 0 only)</option></select></div>
-      <div class="field"><label class="lab" for="spf">Speed</label><select id="spf"><option value="0.1">slow: about 6 sweeps per second</option><option value="0.25" selected>moderate: about 15 sweeps per second</option><option value="1">1 sweep per frame (about 60 per second)</option><option value="4">4 sweeps per frame</option><option value="16">16 sweeps per frame</option></select></div>
+      <div class="field"><label class="lab" for="lSel" data-k="k5">Lattice</label><select id="lSel"><option value="8">8 × 8</option><option value="16">16 × 16</option><option value="32">32 × 32</option><option value="64">64 × 64</option><option value="128" selected>128 × 128</option><option value="256">256 × 256</option></select></div>
+      <div class="field"><label class="lab" for="aSel" data-k="k6">Update rule</label><select id="aSel"><option value="metro" selected><span data-k="k7">Metropolis (single spins)</span></option><option value="wolff"><span data-k="k8">Wolff (clusters, H = 0 only)</span></option></select></div>
+      <div class="field"><label class="lab" for="spf" data-k="k9">Speed</label><select id="spf"><option value="0.1"><span data-k="k10">slow: about 6 sweeps per second</span></option><option value="0.25" selected><span data-k="k11">moderate: about 15 sweeps per second</span></option><option value="1"><span data-k="k12">1 sweep per frame (about 60 per second)</span></option><option value="4"><span data-k="k13">4 sweeps per frame</span></option><option value="16"><span data-k="k14">16 sweeps per frame</span></option></select></div>
     </div>
     <div class="row">
       <button id="runB" class="primary">Pause</button>
-      <button id="rnd">Random start (T = ∞)</button>
-      <button id="allUp">All up</button>
-      <button id="allDn">All down</button>
+      <button id="rnd" data-k="k15">Random start (T = ∞)</button>
+      <button id="allUp" data-k="k16">All up</button>
+      <button id="allDn" data-k="k17">All down</button>
     </div>
     <dl class="readouts">
-      <dt>Temperature T (in units of J/k<sub>B</sub>)</dt><dd id="rT">–</dd>
-      <dt>Magnetization per spin m</dt><dd id="rM">–</dd>
-      <dt>Time average of |m|</dt><dd id="rMa">–</dd>
-      <dt>Onsager’s m<sub>0</sub>(T) for an infinite lattice</dt><dd id="rM0">–</dd>
-      <dt>Energy per spin ε</dt><dd id="rE">–</dd>
-      <dt>Sweeps since the last change</dt><dd id="rSw">–</dd>
+      <dt data-k="k18">Temperature T (in units of J/k<sub>B</sub>)</dt><dd id="rT">–</dd>
+      <dt data-k="k19">Magnetization per spin m</dt><dd id="rM">–</dd>
+      <dt data-k="k20">Time average of |m|</dt><dd id="rMa">–</dd>
+      <dt data-k="k21">Onsager’s m<sub>0</sub>(T) for an infinite lattice</dt><dd id="rM0">–</dd>
+      <dt data-k="k22">Energy per spin ε</dt><dd id="rE">–</dd>
+      <dt data-k="k23">Sweeps since the last change</dt><dd id="rSw">–</dd>
     </dl>
   </div>
 </div>
 <div class="figs">
-  <figure><figcaption><b>Magnetization per spin over time</b>Below T<sub>c</sub> a small lattice flips now and then between +m and −m (dashed: Onsager’s ±m<sub>0</sub>); a large one stays put.</figcaption><canvas id="tsC"></canvas></figure>
-  <figure><figcaption><b>Distribution of m over time</b>One peak at m = 0 above T<sub>c</sub>, two peaks at ±m<sub>0</sub> below it, and a broad distribution at T<sub>c</sub>.</figcaption><canvas id="hiC"></canvas></figure>
-  <figure><figcaption><b>Spin–spin correlation function g(r) of this lattice</b>g(r) = ⟨s<sub>i</sub>s<sub>i+r</sub>⟩ − ⟨|m|⟩², averaged over time along both axes. Log–log; dashed: r<sup>−(d−2+η)</sup> = r<sup>−1/4</sup>, the decay at T<sub>c</sub>.</figcaption><canvas id="gC"></canvas></figure>
+  <figure><figcaption data-k="k24"><b>Magnetization per spin over time</b>Below T<sub>c</sub> a small lattice flips now and then between +m and −m (dashed: Onsager’s ±m<sub>0</sub>); a large one stays put.</figcaption><canvas id="tsC"></canvas></figure>
+  <figure><figcaption data-k="k25"><b>Distribution of m over time</b>One peak at m = 0 above T<sub>c</sub>, two peaks at ±m<sub>0</sub> below it, and a broad distribution at T<sub>c</sub>.</figcaption><canvas id="hiC"></canvas></figure>
+  <figure><figcaption data-k="k26"><b>Spin–spin correlation function g(r) of this lattice</b>g(r) = ⟨s<sub>i</sub>s<sub>i+r</sub>⟩ − ⟨|m|⟩², averaged over time along both axes. Log–log; dashed: r<sup>−(d−2+η)</sup> = r<sup>−1/4</sup>, the decay at T<sub>c</sub>.</figcaption><canvas id="gC"></canvas></figure>
 </div>
 
 
 <section>
-  <h2>Onsager’s exact solution</h2>
-  <p class="prose">In zero field the partition function is Z(T, 0) = [2 cosh(2K) e<sup>I</sup>]<sup>N</sup> with the reduced coupling K = J/k<sub>B</sub>T and I = (1/2π)∫<span class="ss"><sup>π</sup><sub>0</sub></span> ln{[1 + <span class="rad"><span class="rs">√</span><span class="rc">1 − κ² sin²φ</span></span>]/2} dφ, where κ = 2 sinh(2K)/cosh²(2K). From it follow the spontaneous magnetization (Yang, 1952), the energy and the specific heat:</p>
-  <div class="eq">m<sub>0</sub> = [1 − sinh<sup>−4</sup>(2K)]<sup>1/8</sup> ≈ [4<span class="rad"><span class="rs">√</span><span class="rc">2</span></span> ln(1 + <span class="rad"><span class="rs">√</span><span class="rc">2</span></span>)]<sup>1/8</sup> [(T<sub>c</sub> − T)/T<sub>c</sub>]<sup>1/8</sup>,  ε = −J coth(2K)[1 + (2/π)κ′F(κ)]</div>
-  <div class="eq">c/k<sub>B</sub> = (4/π)K² coth²(2K){F(κ) − E(κ) − sech²(2K)[π/2 + κ′F(κ)]},  κ′ = 2 tanh²(2K) − 1</div>
-  <p class="prose">F and E are the complete elliptic integrals of the first and second kind. At T<sub>c</sub>, κ = 1 and F diverges logarithmically, while κ′ changes sign, putting a kink in ε. So c ≈ −(8/π)K<sub>c</sub>² ln|t| + constant with t = (T − T<sub>c</sub>)/T<sub>c</sub>: α = 0, but now a logarithmic divergence rather than a jump. χ is not known exactly because Z is not known for H ≠ 0, but χ ≈ Γ<sup>±</sup>|t|<sup>−7/4</sup> with Γ<sup>+</sup> ≈ 0.42420 and Γ<sup>−</sup> ≈ 0.011254, so Γ<sup>+</sup>/Γ<sup>−</sup> ≈ 37.69, far from the mean-field 2.</p>
-  <p class="prose">The simulations below sample microstates with the Boltzmann weight (Wolff cluster updates at H = 0) on L × L lattices. For finite N the system stays ergodic, so ⟨m⟩ = 0; they therefore record ⟨|M|⟩/N. Below T<sub>c</sub> the susceptibility is taken as k<sub>B</sub>Tχ<sub>abs</sub> = (⟨M²⟩ − ⟨|M|⟩²)/N, which removes the flips between the two ordered states and approximates the response within one phase when L ≫ ξ; above T<sub>c</sub> the standard k<sub>B</sub>Tχ = (⟨M²⟩ − ⟨M⟩²)/N is used, since ⟨|M|⟩² does not vanish even for the symmetric high-temperature distribution and χ<sub>abs</sub> would lie systematically below Γ<sup>+</sup>|t|<sup>−7/4</sup>. Specific heat: k<sub>B</sub>T²c = (⟨E²⟩ − ⟨E⟩²)/N. Each Wolff measurement follows a fixed number of cluster updates (≈ N/⟨C⟩, calibrated during 200 equilibration sweeps and then frozen), not a fixed number of flipped sites, which would make the measurement time depend on the state and bias the averages.</p>
+  <h2 data-k="k27">Onsager’s exact solution</h2>
+  <p class="prose" data-k="k28">In zero field the partition function is Z(T, 0) = [2 cosh(2K) e<sup>I</sup>]<sup>N</sup> with the reduced coupling K = J/k<sub>B</sub>T and I = (1/2π)∫<span class="ss"><sup>π</sup><sub>0</sub></span> ln{[1 + <span class="rad"><span class="rs">√</span><span class="rc">1 − κ² sin²φ</span></span>]/2} dφ, where κ = 2 sinh(2K)/cosh²(2K). From it follow the spontaneous magnetization (Yang, 1952), the energy and the specific heat:</p>
+  <div class="eq" data-k="k29">m<sub>0</sub> = [1 − sinh<sup>−4</sup>(2K)]<sup>1/8</sup> ≈ [4<span class="rad"><span class="rs">√</span><span class="rc">2</span></span> ln(1 + <span class="rad"><span class="rs">√</span><span class="rc">2</span></span>)]<sup>1/8</sup> [(T<sub>c</sub> − T)/T<sub>c</sub>]<sup>1/8</sup>,  ε = −J coth(2K)[1 + (2/π)κ′F(κ)]</div>
+  <div class="eq" data-k="k30">c/k<sub>B</sub> = (4/π)K² coth²(2K){F(κ) − E(κ) − sech²(2K)[π/2 + κ′F(κ)]},  κ′ = 2 tanh²(2K) − 1</div>
+  <p class="prose" data-k="k31">F and E are the complete elliptic integrals of the first and second kind. At T<sub>c</sub>, κ = 1 and F diverges logarithmically, while κ′ changes sign, putting a kink in ε. So c ≈ −(8/π)K<sub>c</sub>² ln|t| + constant with t = (T − T<sub>c</sub>)/T<sub>c</sub>: α = 0, but now a logarithmic divergence rather than a jump. χ is not known exactly because Z is not known for H ≠ 0, but χ ≈ Γ<sup>±</sup>|t|<sup>−7/4</sup> with Γ<sup>+</sup> ≈ 0.42420 and Γ<sup>−</sup> ≈ 0.011254, so Γ<sup>+</sup>/Γ<sup>−</sup> ≈ 37.69, far from the mean-field 2.</p>
+  <p class="prose" data-k="k32">The simulations below sample microstates with the Boltzmann weight (Wolff cluster updates at H = 0) on L × L lattices. For finite N the system stays ergodic, so ⟨m⟩ = 0; they therefore record ⟨|M|⟩/N. Below T<sub>c</sub> the susceptibility is taken as k<sub>B</sub>Tχ<sub>abs</sub> = (⟨M²⟩ − ⟨|M|⟩²)/N, which removes the flips between the two ordered states and approximates the response within one phase when L ≫ ξ; above T<sub>c</sub> the standard k<sub>B</sub>Tχ = (⟨M²⟩ − ⟨M⟩²)/N is used, since ⟨|M|⟩² does not vanish even for the symmetric high-temperature distribution and χ<sub>abs</sub> would lie systematically below Γ<sup>+</sup>|t|<sup>−7/4</sup>. Specific heat: k<sub>B</sub>T²c = (⟨E²⟩ − ⟨E⟩²)/N. Each Wolff measurement follows a fixed number of cluster updates (≈ N/⟨C⟩, calibrated during 200 equilibration sweeps and then frozen), not a fixed number of flipped sites, which would make the measurement time depend on the state and bias the averages.</p>
   <div class="status">
     <span id="chips" class="row" style="gap:14px"></span>
     <span class="bar" aria-hidden="true"><i id="prog"></i></span>
     <span id="stTxt"></span>
     <button id="run">Pause</button>
-    <button id="more">Add more samples</button>
+    <button id="more" data-k="k33">Add more samples</button>
   </div>
   <div class="figs">
-    <figure><figcaption><b>Spontaneous magnetization</b>Dots: ⟨|M|⟩/N for each L. Dashed: Onsager–Yang m<sub>0</sub>(T).</figcaption><canvas id="s1"></canvas></figure>
-    <figure><figcaption><b>m<sub>0</sub> ∝ (−t)<sup>β</sup>, β = 1/8</b>Log–log. Line: exact. The dots flatten close to T<sub>c</sub>, a finite-size effect once ξ grows past L.</figcaption><canvas id="s2"></canvas></figure>
-    <figure><figcaption><b>χ ∝ |t|<sup>−γ</sup>, γ = 7/4</b>Log–log. Dots above T<sub>c</sub> (blue, standard χ) and below (red, χ<sub>abs</sub>) for the largest L. Dashed: Γ<sup>±</sup>|t|<sup>−7/4</sup>, a factor 37.7 apart.</figcaption><canvas id="s3"></canvas></figure>
-    <figure><figcaption><b>Energy per spin ε(T)</b>Dashed: exact. It runs from −2J at T = 0 to 0 at T = ∞, with a kink at T<sub>c</sub>.</figcaption><canvas id="s4"></canvas></figure>
-    <figure><figcaption><b>Specific heat c(T)</b>Dashed: exact, with a sharp logarithmic peak at T<sub>c</sub>; the simulations are almost indistinguishable away from it.</figcaption><canvas id="s5"></canvas></figure>
-    <figure><figcaption><b>The logarithmic divergence of c</b>Exact c against |t| on a log scale, above (blue) and below (red) T<sub>c</sub>: straight lines with slope −(8/π)K<sub>c</sub>² ≈ −0.494 per unit of ln|t|.</figcaption><canvas id="s6"></canvas></figure>
+    <figure><figcaption data-k="k34"><b>Spontaneous magnetization</b>Dots: ⟨|M|⟩/N for each L. Dashed: Onsager–Yang m<sub>0</sub>(T).</figcaption><canvas id="s1"></canvas></figure>
+    <figure><figcaption data-k="k35"><b>m<sub>0</sub> ∝ (−t)<sup>β</sup>, β = 1/8</b>Log–log. Line: exact. The dots flatten close to T<sub>c</sub>, a finite-size effect once ξ grows past L.</figcaption><canvas id="s2"></canvas></figure>
+    <figure><figcaption data-k="k36"><b>χ ∝ |t|<sup>−γ</sup>, γ = 7/4</b>Log–log. Dots above T<sub>c</sub> (blue, standard χ) and below (red, χ<sub>abs</sub>) for the largest L. Dashed: Γ<sup>±</sup>|t|<sup>−7/4</sup>, a factor 37.7 apart.</figcaption><canvas id="s3"></canvas></figure>
+    <figure><figcaption data-k="k37"><b>Energy per spin ε(T)</b>Dashed: exact. It runs from −2J at T = 0 to 0 at T = ∞, with a kink at T<sub>c</sub>.</figcaption><canvas id="s4"></canvas></figure>
+    <figure><figcaption data-k="k38"><b>Specific heat c(T)</b>Dashed: exact, with a sharp logarithmic peak at T<sub>c</sub>; the simulations are almost indistinguishable away from it.</figcaption><canvas id="s5"></canvas></figure>
+    <figure><figcaption data-k="k39"><b>The logarithmic divergence of c</b>Exact c against |t| on a log scale, above (blue) and below (red) T<sub>c</sub>: straight lines with slope −(8/π)K<sub>c</sub>² ≈ −0.494 per unit of ln|t|.</figcaption><canvas id="s6"></canvas></figure>
   </div>
 </section>
 
 <section>
-  <h2>Why there is a transition: Peierls’ argument</h2>
-  <p class="prose">Ising concluded from the chain that there is no transition in any dimension. Peierls argued otherwise in 1936. Compare a single aligned domain with a lattice containing a second domain of n flipped spins bounded by an interface. In two dimensions the interface costs 2J per broken bond, so the energy grows with its length n, while the entropy is set by the number of interfaces Ω(n). Counting each interface as a walk that never immediately retraces itself, with N possible positions, gives Ω(n) &lt; N3<sup>n</sup>, a gross overestimate. For a compact domain of comparable size, n ∝ <span class="rad"><span class="rs">√</span><span class="rc">N</span></span>, so</p>
-  <div class="eq">F<sub>2-dom</sub> − F<sub>1-dom</sub> = 2Jn − k<sub>B</sub>T ln Ω(n) &gt; 2J<span class="rad"><span class="rs">√</span><span class="rc">N</span></span> − k<sub>B</sub>T ln(N3<sup><span class="rad"><span class="rs">√</span><span class="rc">N</span></span></sup>)</div>
-  <p class="prose">The ordered state is stable whenever this is positive, k<sub>B</sub>T &lt; 2J/[ln 3 + (ln N)/<span class="rad"><span class="rs">√</span><span class="rc">N</span></span>]. As N → ∞, (ln N)/<span class="rad"><span class="rs">√</span><span class="rc">N</span></span> → 0, so T<sub>c</sub> &gt; 2J/(k<sub>B</sub> ln 3) ≈ 1.820: there must be a transition at a nonzero temperature. In one dimension the cost of a droplet is 4J whatever its size and is always outweighed by the entropy k<sub>B</sub>T ln[2N(N − 1)].</p>
+  <h2 data-k="k40">Why there is a transition: Peierls’ argument</h2>
+  <p class="prose" data-k="k41">Ising concluded from the chain that there is no transition in any dimension. Peierls argued otherwise in 1936. Compare a single aligned domain with a lattice containing a second domain of n flipped spins bounded by an interface. In two dimensions the interface costs 2J per broken bond, so the energy grows with its length n, while the entropy is set by the number of interfaces Ω(n). Counting each interface as a walk that never immediately retraces itself, with N possible positions, gives Ω(n) &lt; N3<sup>n</sup>, a gross overestimate. For a compact domain of comparable size, n ∝ <span class="rad"><span class="rs">√</span><span class="rc">N</span></span>, so</p>
+  <div class="eq" data-k="k42">F<sub>2-dom</sub> − F<sub>1-dom</sub> = 2Jn − k<sub>B</sub>T ln Ω(n) &gt; 2J<span class="rad"><span class="rs">√</span><span class="rc">N</span></span> − k<sub>B</sub>T ln(N3<sup><span class="rad"><span class="rs">√</span><span class="rc">N</span></span></sup>)</div>
+  <p class="prose" data-k="k43">The ordered state is stable whenever this is positive, k<sub>B</sub>T &lt; 2J/[ln 3 + (ln N)/<span class="rad"><span class="rs">√</span><span class="rc">N</span></span>]. As N → ∞, (ln N)/<span class="rad"><span class="rs">√</span><span class="rc">N</span></span> → 0, so T<sub>c</sub> &gt; 2J/(k<sub>B</sub> ln 3) ≈ 1.820: there must be a transition at a nonzero temperature. In one dimension the cost of a droplet is 4J whatever its size and is always outweighed by the entropy k<sub>B</sub>T ln[2N(N − 1)].</p>
   <div class="two2">
     <div>
-      <figure style="margin:0"><figcaption><b>A droplet of flipped spins</b>Its interface (red) has n broken bonds and costs 2Jn. Click the lattice for a new droplet.</figcaption><canvas id="peC"></canvas></figure>
+      <figure style="margin:0"><figcaption data-k="k44"><b>A droplet of flipped spins</b>Its interface (red) has n broken bonds and costs 2Jn. Click the lattice for a new droplet.</figcaption><canvas id="peC"></canvas></figure>
       <dl class="readouts" id="peRead" style="margin-top:10px"></dl>
     </div>
-    <figure style="margin:0"><figcaption><b>Peierls bound on T<sub>c</sub> against N</b>Blue: 2J/[ln 3 + (ln N)/<span class="rad"><span class="rs">√</span><span class="rc">N</span></span>]. It approaches 2/ln 3 ≈ 1.820 (dashed), safely below the exact T<sub>c</sub> ≈ 2.269 (red).</figcaption><canvas id="peN"></canvas></figure>
+    <figure style="margin:0"><figcaption data-k="k45"><b>Peierls bound on T<sub>c</sub> against N</b>Blue: 2J/[ln 3 + (ln N)/<span class="rad"><span class="rs">√</span><span class="rc">N</span></span>]. It approaches 2/ln 3 ≈ 1.820 (dashed), safely below the exact T<sub>c</sub> ≈ 2.269 (red).</figcaption><canvas id="peN"></canvas></figure>
   </div>
 </section>
 
 <section>
-  <h2>Widom’s scaling ansatz</h2>
-  <p class="prose">Mean-field theory fails in low dimensions, so a more general framework is needed. With the reduced variables t = (T − T<sub>c</sub>)/T<sub>c</sub> and h = H/k<sub>B</sub>T, the critical point is (t, h) = (0, 0). The free energy splits into a regular part and a singular part responsible for the cusp, and Widom argued that</p>
-  <div class="eq">f<sub>s</sub>(t, h) = |t|<sup>2−α</sup> 𝓕<sub>±</sub>(h/|t|<sup>Δ</sup>),  m(t, h) = |t|<sup>β</sup> 𝓜<sub>±</sub>(h/|t|<sup>Δ</sup>)  for t → 0<sup>±</sup>, h → 0</div>
-  <p class="prose">Δ is the gap exponent and 𝓜<sub>±</sub> are odd scaling functions for t &gt; 0 and t &lt; 0. As x = h/|t|<sup>Δ</sup> → 0, 𝓜<sub>+</sub> → 0 and 𝓜<sub>−</sub> → ± a nonzero constant; as x → ±∞, 𝓜<sub>±</sub> ∝ sign(x)|x|<sup>1/δ</sup>, which requires Δ = βδ. So if m/|t|<sup>β</sup> is plotted against h/|t|<sup>Δ</sup>, data at many t and h fall onto just two curves. The page simulates a 64 × 64 lattice at 10 temperatures and 4 fields with Metropolis updates, which allow a field. Move the exponents away from β = 1/8 and Δ = 15/8 and the collapse breaks.</p>
+  <h2 data-k="k46">Widom’s scaling ansatz</h2>
+  <p class="prose" data-k="k47">Mean-field theory fails in low dimensions, so a more general framework is needed. With the reduced variables t = (T − T<sub>c</sub>)/T<sub>c</sub> and h = H/k<sub>B</sub>T, the critical point is (t, h) = (0, 0). The free energy splits into a regular part and a singular part responsible for the cusp, and Widom argued that</p>
+  <div class="eq" data-k="k48">f<sub>s</sub>(t, h) = |t|<sup>2−α</sup> 𝓕<sub>±</sub>(h/|t|<sup>Δ</sup>),  m(t, h) = |t|<sup>β</sup> 𝓜<sub>±</sub>(h/|t|<sup>Δ</sup>)  for t → 0<sup>±</sup>, h → 0</div>
+  <p class="prose" data-k="k49">Δ is the gap exponent and 𝓜<sub>±</sub> are odd scaling functions for t &gt; 0 and t &lt; 0. As x = h/|t|<sup>Δ</sup> → 0, 𝓜<sub>+</sub> → 0 and 𝓜<sub>−</sub> → ± a nonzero constant; as x → ±∞, 𝓜<sub>±</sub> ∝ sign(x)|x|<sup>1/δ</sup>, which requires Δ = βδ. So if m/|t|<sup>β</sup> is plotted against h/|t|<sup>Δ</sup>, data at many t and h fall onto just two curves. The page simulates a 64 × 64 lattice at 10 temperatures and 4 fields with Metropolis updates, which allow a field. Move the exponents away from β = 1/8 and Δ = 15/8 and the collapse breaks.</p>
   <div class="status">
     <span id="wChips" class="note"></span>
     <span class="bar" aria-hidden="true"><i id="wProg"></i></span>
   </div>
   <div class="two2">
-    <figure style="margin:0"><figcaption><b>Raw data: m against h</b>Log–log. Each line is one t: above T<sub>c</sub> (blue shades) and below (red shades).</figcaption><canvas id="w1"></canvas></figure>
-    <figure style="margin:0"><figcaption><b>Collapse: m/|t|<sup>β</sup> against h/|t|<sup>Δ</sup></b>Blue: t &gt; 0 traces 𝓜<sub>+</sub>. Red: t &lt; 0 traces 𝓜<sub>−</sub>. Dashed: slope 1/δ = 1/15 at large x.</figcaption><canvas id="w2"></canvas></figure>
+    <figure style="margin:0"><figcaption data-k="k50"><b>Raw data: m against h</b>Log–log. Each line is one t: above T<sub>c</sub> (blue shades) and below (red shades).</figcaption><canvas id="w1"></canvas></figure>
+    <figure style="margin:0"><figcaption data-k="k51"><b>Collapse: m/|t|<sup>β</sup> against h/|t|<sup>Δ</sup></b>Blue: t &gt; 0 traces 𝓜<sub>+</sub>. Red: t &lt; 0 traces 𝓜<sub>−</sub>. Dashed: slope 1/δ = 1/15 at large x.</figcaption><canvas id="w2"></canvas></figure>
   </div>
   <div class="row" style="gap:24px; margin-top:10px">
     <div class="sl" style="flex:1 1 220px"><label for="wB">β</label><output id="wBo"></output><input type="range" id="wB" min="0" max="0.6" step="0.005" value="0.125"></div>
     <div class="sl" style="flex:1 1 220px"><label for="wD">Δ = βδ</label><output id="wDo"></output><input type="range" id="wD" min="0.5" max="3" step="0.005" value="1.875"></div>
-    <div class="row"><button id="wExact">2D exact (β = 1/8, Δ = 15/8)</button><button id="wMF">Mean field (β = 1/2, Δ = 3/2)</button></div>
+    <div class="row"><button id="wExact" data-k="k52">2D exact (β = 1/8, Δ = 15/8)</button><button id="wMF" data-k="k53">Mean field (β = 1/2, Δ = 3/2)</button></div>
   </div>
-  <p class="prose" style="margin-top:14px">Differentiating the ansatz gives the other quantities: m from ∂f<sub>s</sub>/∂h gives 2 − α − Δ = β; χ from ∂²f<sub>s</sub>/∂h² gives 2 − α − 2Δ = −γ; and c = |t|<sup>−α</sup>𝒞<sub>±</sub>(h/|t|<sup>Δ</sup>). The correlation function follows a similar form, g(r, t, h) ∝ r<sup>−(d−2+η)</sup>𝒢<sub>±</sub>(r/ξ, h/|t|<sup>Δ</sup>), with 𝒢 constant for r ≪ ξ and ∝ (r/ξ)<sup>[η+(d−3)]/2</sup>e<sup>−r/ξ</sup> for r ≫ ξ. In one dimension η = 1 and 𝒢 = e<sup>−r/ξ</sup>: no power-law part at all.</p>
+  <p class="prose" style="margin-top:14px" data-k="k54">Differentiating the ansatz gives the other quantities: m from ∂f<sub>s</sub>/∂h gives 2 − α − Δ = β; χ from ∂²f<sub>s</sub>/∂h² gives 2 − α − 2Δ = −γ; and c = |t|<sup>−α</sup>𝒞<sub>±</sub>(h/|t|<sup>Δ</sup>). The correlation function follows a similar form, g(r, t, h) ∝ r<sup>−(d−2+η)</sup>𝒢<sub>±</sub>(r/ξ, h/|t|<sup>Δ</sup>), with 𝒢 constant for r ≪ ξ and ∝ (r/ξ)<sup>[η+(d−3)]/2</sup>e<sup>−r/ξ</sup> for r ≫ ξ. In one dimension η = 1 and 𝒢 = e<sup>−r/ξ</sup>: no power-law part at all.</p>
 </section>
 
 <section>
-  <h2>Scaling relations</h2>
-  <p class="prose">The six exponents are not independent: they all describe the same non-analytic free-energy surface near its cusp. From Δ = βδ, 2 − α − Δ = β and 2 − α − 2Δ = −γ follow β + γ = βδ (Widom) and α + 2β + γ = 2 (Rushbrooke). The sum rule k<sub>B</sub>Tχ = ∫g dr gives γ = ν(2 − η) (Fisher), and f<sub>s</sub> ∝ ξ<sup>−d</sup> gives the hyperscaling relation 2 − α = νd (Josephson), valid only for d ≤ 4. So only two exponents are independent. Pick ν, η and d and the rest follow:</p>
+  <h2 data-k="k55">Scaling relations</h2>
+  <p class="prose" data-k="k56">The six exponents are not independent: they all describe the same non-analytic free-energy surface near its cusp. From Δ = βδ, 2 − α − Δ = β and 2 − α − 2Δ = −γ follow β + γ = βδ (Widom) and α + 2β + γ = 2 (Rushbrooke). The sum rule k<sub>B</sub>Tχ = ∫g dr gives γ = ν(2 − η) (Fisher), and f<sub>s</sub> ∝ ξ<sup>−d</sup> gives the hyperscaling relation 2 − α = νd (Josephson), valid only for d ≤ 4. So only two exponents are independent. Pick ν, η and d and the rest follow:</p>
   <div class="row" style="gap:16px; align-items:flex-end; margin:8px 0">
     <div class="field"><label class="lab" for="rd">d</label><select id="rd"><option>1</option><option selected>2</option><option>3</option><option>4</option></select></div>
     <div class="field"><label class="lab" for="rnu">ν</label><input class="num" id="rnu" type="number" step="0.001" value="1"></div>
     <div class="field"><label class="lab" for="reta">η</label><input class="num" id="reta" type="number" step="0.001" value="0.25"></div>
-    <div class="btns"><button data-p="2d">2D exact</button><button data-p="3d">3D numerical</button><button data-p="mf">Mean field (d = 4)</button><button data-p="1d">d = 1 (with k)</button></div>
+    <div class="btns"><button data-p="2d" data-k="k57">2D exact</button><button data-p="3d" data-k="k58">3D numerical</button><button data-p="mf" data-k="k59">Mean field (d = 4)</button><button data-p="1d" data-k="k60">d = 1 (with k)</button></div>
   </div>
-  <div class="sl" id="kWrap" hidden><label for="rk">k in the reduced temperature t = e<sup>−kJ/k<sub>B</sub>T</sup> for d = 1</label><output id="rko"></output><input type="range" id="rk" min="0.5" max="4" step="0.01" value="2"></div>
+  <div class="sl" id="kWrap" hidden><label for="rk" data-k="k61">k in the reduced temperature t = e<sup>−kJ/k<sub>B</sub>T</sup> for d = 1</label><output id="rko"></output><input type="range" id="rk" min="0.5" max="4" step="0.01" value="2"></div>
   <div class="tbl"><table id="relTable" aria-label="Exponents from the scaling relations"></table></div>
   <p class="note" id="relNote" style="margin-top:8px"></p>
 </section>
 
 <section>
-  <h2>Non-universal T<sub>c</sub>, universal exponents</h2>
-  <p class="prose">Like p<sub>c</sub> in percolation, T<sub>c</sub> depends on the lattice, even in mean-field theory where T<sub>c</sub> ∝ z. The exponents depend only on the dimension.</p>
-  <div class="tbl"><table aria-label="Critical temperatures"><thead><tr><th>Lattice</th><th style="text-align:right">z</th><th style="text-align:right">k<sub>B</sub>T<sub>c</sub>/J</th></tr></thead><tbody>
-    <tr><td><b>d = 1, line</b></td><td class="num">2</td><td class="num">0</td></tr>
-    <tr><td><b>d = 2, hexagonal</b></td><td class="num">3</td><td class="num">2/ln(2 + <span class="rad"><span class="rs">√</span><span class="rc">3</span></span>) ≈ 1.519</td></tr>
-    <tr><td><b>d = 2, square</b></td><td class="num">4</td><td class="num">2/ln(1 + <span class="rad"><span class="rs">√</span><span class="rc">2</span></span>) ≈ 2.269</td></tr>
-    <tr><td><b>d = 2, triangular</b></td><td class="num">6</td><td class="num">4/ln 3 ≈ 3.641</td></tr>
-    <tr><td><b>d = 3, diamond</b></td><td class="num">4</td><td class="num">≈ 2.70</td></tr>
-    <tr><td><b>d = 3, simple cubic</b></td><td class="num">6</td><td class="num">≈ 4.5115</td></tr>
-    <tr><td><b>d = 3, body-centered cubic</b></td><td class="num">8</td><td class="num">≈ 6.40</td></tr>
-    <tr><td><b>d = 3, face-centered cubic</b></td><td class="num">12</td><td class="num">≈ 9.79</td></tr>
-    <tr><td><b>Mean field</b></td><td class="num">z</td><td class="num">z</td></tr></tbody></table></div>
-  <div class="tbl"><table aria-label="Critical exponents by dimension"><thead><tr><th>Exponent</th><th>Quantity</th><th style="text-align:right">d = 1 *</th><th style="text-align:right">d = 2</th><th style="text-align:right">d = 3</th><th style="text-align:right">d ≥ 4</th><th style="text-align:right">Mean field</th></tr></thead><tbody>
-    <tr><td><b>α</b></td><td>c(t, 0) ∝ |t|<sup>−α</sup></td><td class="num">2 − 2/k</td><td class="num">0 (log)</td><td class="num">0.111(2)</td><td class="num">0</td><td class="num">0 (jump)</td></tr>
+  <h2 data-k="k62">Non-universal T<sub>c</sub>, universal exponents</h2>
+  <p class="prose" data-k="k63">Like p<sub>c</sub> in percolation, T<sub>c</sub> depends on the lattice, even in mean-field theory where T<sub>c</sub> ∝ z. The exponents depend only on the dimension.</p>
+  <div class="tbl"><table aria-label="Critical temperatures"><thead><tr><th data-k="k64">Lattice</th><th style="text-align:right">z</th><th style="text-align:right">k<sub>B</sub>T<sub>c</sub>/J</th></tr></thead><tbody>
+    <tr><td data-k="k65"><b>d = 1, line</b></td><td class="num">2</td><td class="num">0</td></tr>
+    <tr><td data-k="k66"><b>d = 2, hexagonal</b></td><td class="num">3</td><td class="num" data-k="k67">2/ln(2 + <span class="rad"><span class="rs">√</span><span class="rc">3</span></span>) ≈ 1.519</td></tr>
+    <tr><td data-k="k68"><b>d = 2, square</b></td><td class="num">4</td><td class="num" data-k="k69">2/ln(1 + <span class="rad"><span class="rs">√</span><span class="rc">2</span></span>) ≈ 2.269</td></tr>
+    <tr><td data-k="k70"><b>d = 2, triangular</b></td><td class="num">6</td><td class="num" data-k="k71">4/ln 3 ≈ 3.641</td></tr>
+    <tr><td data-k="k72"><b>d = 3, diamond</b></td><td class="num">4</td><td class="num">≈ 2.70</td></tr>
+    <tr><td data-k="k73"><b>d = 3, simple cubic</b></td><td class="num">6</td><td class="num">≈ 4.5115</td></tr>
+    <tr><td data-k="k74"><b>d = 3, body-centered cubic</b></td><td class="num">8</td><td class="num">≈ 6.40</td></tr>
+    <tr><td data-k="k75"><b>d = 3, face-centered cubic</b></td><td class="num">12</td><td class="num">≈ 9.79</td></tr>
+    <tr><td data-k="k76"><b>Mean field</b></td><td class="num">z</td><td class="num">z</td></tr></tbody></table></div>
+  <div class="tbl"><table aria-label="Critical exponents by dimension"><thead><tr><th data-k="k77">Exponent</th><th data-k="k78">Quantity</th><th style="text-align:right">d = 1 *</th><th style="text-align:right">d = 2</th><th style="text-align:right">d = 3</th><th style="text-align:right">d ≥ 4</th><th style="text-align:right" data-k="k79">Mean field</th></tr></thead><tbody>
+    <tr><td><b>α</b></td><td>c(t, 0) ∝ |t|<sup>−α</sup></td><td class="num">2 − 2/k</td><td class="num" data-k="k80">0 (log)</td><td class="num">0.111(2)</td><td class="num">0</td><td class="num" data-k="k81">0 (jump)</td></tr>
     <tr><td><b>β</b></td><td>m(t, 0) ∝ (−t)<sup>β</sup></td><td class="num">0</td><td class="num">1/8</td><td class="num">0.3262(13)</td><td class="num">1/2</td><td class="num">1/2</td></tr>
     <tr><td><b>γ</b></td><td>χ(t, 0) ∝ |t|<sup>−γ</sup></td><td class="num">2/k</td><td class="num">7/4</td><td class="num">1.237(3)</td><td class="num">1</td><td class="num">1</td></tr>
-    <tr><td><b>δ</b></td><td>m(0, h) ∝ sign(h)|h|<sup>1/δ</sup></td><td class="num">∞</td><td class="num">15</td><td class="num">4.792(18)</td><td class="num">3</td><td class="num">3</td></tr>
+    <tr><td><b>δ</b></td><td data-k="k82">m(0, h) ∝ sign(h)|h|<sup>1/δ</sup></td><td class="num">∞</td><td class="num">15</td><td class="num">4.792(18)</td><td class="num">3</td><td class="num">3</td></tr>
     <tr><td><b>ν</b></td><td>ξ(t, 0) ∝ |t|<sup>−ν</sup></td><td class="num">2/k</td><td class="num">1</td><td class="num">0.6297(8)</td><td class="num">1/2</td><td class="num">1/2</td></tr>
     <tr><td><b>η</b></td><td>g(r, t, 0) ∝ r<sup>−(d−2+η)</sup>𝒢<sub>±</sub>(r/ξ, 0)</td><td class="num">1</td><td class="num">1/4</td><td class="num">0.036(5)</td><td class="num">0</td><td class="num">0</td></tr>
   </tbody></table></div>
-  <p class="note" style="margin-top:8px">* Using the reduced “temperature” t = exp(−kJ/k<sub>B</sub>T) with an arbitrary constant k &gt; 0, since T<sub>c</sub> = 0 in one dimension. These exponents are somewhat artificial: they describe power laws in this t rather than in T − T<sub>c</sub>, and α, γ and ν depend on k. Values in d = 3 are numerical, with the uncertainty in the last digits in brackets.</p>
+  <p class="note" style="margin-top:8px" data-k="k83">* Using the reduced “temperature” t = exp(−kJ/k<sub>B</sub>T) with an arbitrary constant k &gt; 0, since T<sub>c</sub> = 0 in one dimension. These exponents are somewhat artificial: they describe power laws in this t rather than in T − T<sub>c</sub>, and α, γ and ν depend on k. Values in d = 3 are numerical, with the uncertainty in the last digits in brackets.</p>
 </section>
 
 <section>
-  <h2>The Ginzburg criterion and the upper critical dimension</h2>
-  <p class="prose">Mean-field theory agrees with the exponents for d ≥ 4, which suggests that fluctuations stop mattering in high dimensions. The energy neglected by mean field is ΔE = −J Σ<sub>⟨ij⟩</sub>(s<sub>i</sub> − ⟨s<sub>i</sub>⟩)(s<sub>j</sub> − ⟨s<sub>j</sub>⟩), and by the sum rule |⟨ΔE⟩| = (Jz/2)k<sub>B</sub>Tχ per spin. For mean field to hold it must be small compared with the mean-field energy (Jz/2)Nm², that is Nk<sub>B</sub>Tχ ≪ (Nm)², or simply <span class="rad"><span class="rs">√</span><span class="rc">⟨M²⟩ − ⟨M⟩²</span></span> ≪ ⟨M⟩. Within a correlation volume ξ<sup>d</sup> ∝ |t|<sup>−νd</sup> this ratio scales as (−t)<sup>νd − γ − 2β</sup>, which stays small as t → 0<sup>−</sup> only if</p>
+  <h2 data-k="k84">The Ginzburg criterion and the upper critical dimension</h2>
+  <p class="prose" data-k="k85">Mean-field theory agrees with the exponents for d ≥ 4, which suggests that fluctuations stop mattering in high dimensions. The energy neglected by mean field is ΔE = −J Σ<sub>⟨ij⟩</sub>(s<sub>i</sub> − ⟨s<sub>i</sub>⟩)(s<sub>j</sub> − ⟨s<sub>j</sub>⟩), and by the sum rule |⟨ΔE⟩| = (Jz/2)k<sub>B</sub>Tχ per spin. For mean field to hold it must be small compared with the mean-field energy (Jz/2)Nm², that is Nk<sub>B</sub>Tχ ≪ (Nm)², or simply <span class="rad"><span class="rs">√</span><span class="rc">⟨M²⟩ − ⟨M⟩²</span></span> ≪ ⟨M⟩. Within a correlation volume ξ<sup>d</sup> ∝ |t|<sup>−νd</sup> this ratio scales as (−t)<sup>νd − γ − 2β</sup>, which stays small as t → 0<sup>−</sup> only if</p>
   <div class="eq">d &gt; (γ + 2β)/ν</div>
-  <p class="prose">With the mean-field values β = 1/2, γ = 1 and ν = 1/2 this means d &gt; 4: d<sub>u</sub> = 4 is the upper critical dimension, above which mean-field theory gives the correct exponents. In three or fewer dimensions the criterion is bound to fail close enough to T<sub>c</sub>, although mean field can still be a good approximation in practice, as for type I superconductors (Ginzburg, Nobel Prize 2003).</p>
+  <p class="prose" data-k="k86">With the mean-field values β = 1/2, γ = 1 and ν = 1/2 this means d &gt; 4: d<sub>u</sub> = 4 is the upper critical dimension, above which mean-field theory gives the correct exponents. In three or fewer dimensions the criterion is bound to fail close enough to T<sub>c</sub>, although mean field can still be a good approximation in practice, as for type I superconductors (Ginzburg, Nobel Prize 2003).</p>
   <div class="figs">
-    <figure><figcaption><b>Relative fluctuations with mean-field exponents</b>(−t)<sup>d/2 − 2</sup> against −t, log–log, for d = 2 (red), 3, 4 (dark) and 5 (blue). For d &lt; 4 the fluctuations blow up as t → 0<sup>−</sup> and mean field is inconsistent; at d = 4 they stay marginal; above, they vanish.</figcaption><canvas id="gz"></canvas></figure>
+    <figure><figcaption data-k="k87"><b>Relative fluctuations with mean-field exponents</b>(−t)<sup>d/2 − 2</sup> against −t, log–log, for d = 2 (red), 3, 4 (dark) and 5 (blue). For d &lt; 4 the fluctuations blow up as t → 0<sup>−</sup> and mean field is inconsistent; at d = 4 they stay marginal; above, they vanish.</figcaption><canvas id="gz"></canvas></figure>
   </div>
 </section>
 
 <section id="references">
-  <h2>References</h2>
-  <div class="keyref"><p class="prose" style="margin:0"><b>Key reference.</b> K. Christensen and N. R. Moloney, <i>Complexity and Criticality</i>, Imperial College Press, London (2005), Chapter 2.</p></div>
+  <h2 data-k="k88">References</h2>
+  <div class="keyref"><p class="prose" style="margin:0" data-k="k89"><b>Key reference.</b> K. Christensen and N. R. Moloney, <i>Complexity and Criticality</i>, Imperial College Press, London (2005), Chapter 2.</p></div>
   <ol class="refs">
-    <li>L. Onsager, “Crystal statistics. I. A two-dimensional model with an order-disorder transition,” <i>Phys. Rev.</i> <b>65</b>, 117 (1944).</li>
-    <li>C. N. Yang, “The spontaneous magnetization of a two-dimensional Ising model,” <i>Phys. Rev.</i> <b>85</b>, 808 (1952).</li>
-    <li>H. A. Kramers and G. H. Wannier, “Statistics of the two-dimensional ferromagnet. Part I,” <i>Phys. Rev.</i> <b>60</b>, 252 (1941).</li>
-    <li>R. Peierls, “On Ising’s model of ferromagnetism,” <i>Proc. Cambridge Philos. Soc.</i> <b>32</b>, 477 (1936).</li>
-    <li>B. Widom, “Equation of state in the neighborhood of the critical point,” <i>J. Chem. Phys.</i> <b>43</b>, 3898 (1965).</li>
-    <li>K. Huang, <i>Statistical Mechanics</i>, 2nd ed., Wiley (1987), Chapters 14 and 15.</li>
-    <li>N. Metropolis, A. W. Rosenbluth, M. N. Rosenbluth, A. H. Teller and E. Teller, “Equation of state calculations by fast computing machines,” <i>J. Chem. Phys.</i> <b>21</b>, 1087 (1953).</li>
-    <li>U. Wolff, “Collective Monte Carlo updating for spin systems,” <i>Phys. Rev. Lett.</i> <b>62</b>, 361 (1989).</li>
-    <li>R. J. Baxter, <i>Exactly Solved Models in Statistical Mechanics</i>, Academic Press (1982).</li>
+    <li data-k="k90">L. Onsager, “Crystal statistics. I. A two-dimensional model with an order-disorder transition,” <i>Phys. Rev.</i> <b>65</b>, 117 (1944).</li>
+    <li data-k="k91">C. N. Yang, “The spontaneous magnetization of a two-dimensional Ising model,” <i>Phys. Rev.</i> <b>85</b>, 808 (1952).</li>
+    <li data-k="k92">H. A. Kramers and G. H. Wannier, “Statistics of the two-dimensional ferromagnet. Part I,” <i>Phys. Rev.</i> <b>60</b>, 252 (1941).</li>
+    <li data-k="k93">R. Peierls, “On Ising’s model of ferromagnetism,” <i>Proc. Cambridge Philos. Soc.</i> <b>32</b>, 477 (1936).</li>
+    <li data-k="k94">B. Widom, “Equation of state in the neighborhood of the critical point,” <i>J. Chem. Phys.</i> <b>43</b>, 3898 (1965).</li>
+    <li data-k="k95">K. Huang, <i>Statistical Mechanics</i>, 2nd ed., Wiley (1987), Chapters 14 and 15.</li>
+    <li data-k="k96">N. Metropolis, A. W. Rosenbluth, M. N. Rosenbluth, A. H. Teller and E. Teller, “Equation of state calculations by fast computing machines,” <i>J. Chem. Phys.</i> <b>21</b>, 1087 (1953).</li>
+    <li data-k="k97">U. Wolff, “Collective Monte Carlo updating for spin systems,” <i>Phys. Rev. Lett.</i> <b>62</b>, 361 (1989).</li>
+    <li data-k="k98">R. J. Baxter, <i>Exactly Solved Models in Statistical Mechanics</i>, Academic Press (1982).</li>
   </ol>
 </section>
 
 <footer>
-  Simulations use Metropolis and Wolff updates on periodic square lattices; exact curves use complete elliptic integrals computed with the arithmetic–geometric mean.
-  <p style="margin-top:14px">Lecture notes by Sang Hoon Lee. Created by Claude Opus 5.5.</p>
+  <span data-k="k99">Simulations use Metropolis and Wolff updates on periodic square lattices; exact curves use complete elliptic integrals computed with the arithmetic–geometric mean.</span>
+  <p style="margin-top:14px" data-k="k100">Lecture notes by Sang Hoon Lee. Created by Claude Opus 5.5.</p>
 </footer>
 </div>
 
@@ -416,7 +434,7 @@ function plot(cv,o){
   const X0=fx(x0),X1=fx(x1),Y0=fy(y0),Y1=fy(y1);
   const X=v=>m.l+(fx(v)-X0)/(X1-X0)*pw, Y=v=>m.t+ph-(fy(v)-Y0)/(Y1-Y0)*ph;
   cv._xy=(a,b)=>[X(a),Y(b)]; cv._inv = px => { const t=(px-m.l)/pw; const v=X0+t*(X1-X0); return o.logx?Math.pow(10,v):v; };
-  ctx.font='11px "Public Sans", system-ui, sans-serif'; ctx.lineWidth=1;
+  ctx.font='11px "Public Sans", "IBM Plex Sans KR", system-ui, sans-serif'; ctx.lineWidth=1;
   function ticks(lo,hi,log,custom){
     if (custom) return custom.filter(v=>v>=lo*0.999&&v<=hi*1.001).map(v=>[v,(o.xfmt||String)(v)]);
     if (log){
@@ -532,14 +550,14 @@ function renderSpins(){
 }
 function liveCharts(){
   const T=LV.tr*TC, mm=m0(T), n=LS.ts.length;
-  plot($('tsC'),{x:[0,Math.max(50,n)],y:[-1.05,1.05],series:[{color:C.accent,width:1.4,pts:LS.ts.map((v,i)=>[i,v])}].concat(mm>0?[{color:C.crit,dash:[5,4],width:1.1,pts:[[0,mm],[1e9,mm]]},{color:C.crit,dash:[5,4],width:1.1,pts:[[0,-mm],[1e9,-mm]]}]:[]),xlabel:'updates (most recent 600)',ylabel:'m'});
+  plot($('tsC'),{x:[0,Math.max(50,n)],y:[-1.05,1.05],series:[{color:C.accent,width:1.4,pts:LS.ts.map((v,i)=>[i,v])}].concat(mm>0?[{color:C.crit,dash:[5,4],width:1.1,pts:[[0,mm],[1e9,mm]]},{color:C.crit,dash:[5,4],width:1.1,pts:[[0,-mm],[1e9,-mm]]}]:[]),xlabel:tr('updates (most recent 600)','갱신 (최근 600회)'),ylabel:'m'});
   const hp=[]; if (LS.hn) for (let k=0;k<81;k++) hp.push([-1+k*2/80,LS.hist[k]/LS.hn/(2/80)]);
-  plot($('hiC'),{x:[-1,1],zeroY:true,series:[{color:C.accent,width:1.8,pts:hp}],vlines:mm>0?[{x:mm,color:C.crit,dash:[4,4]},{x:-mm,color:C.crit,dash:[4,4]}]:[],xlabel:'m',ylabel:'probability density'});
+  plot($('hiC'),{x:[-1,1],zeroY:true,series:[{color:C.accent,width:1.8,pts:hp}],vlines:mm>0?[{x:mm,color:C.crit,dash:[4,4]},{x:-mm,color:C.crit,dash:[4,4]}]:[],xlabel:'m',ylabel:tr('probability density','확률 밀도')});
   const ma=LS.mn?LS.mabs/LS.mn:0, g=[];
   if (LS.cn) for (let r=1;r<=LV.L/2;r++){ const v=LS.corr[r]/LS.cn-ma*ma; if (v>0) g.push([r,v]); }
   const ser=[{color:C.accent,width:1.8,pts:g},{dots:true,r:3,color:C.accent,pts:g}];
   if (g.length) ser.push({color:C.ink,dash:[6,4],width:1.2,noScale:true,pts:[1,LV.L/2].map(r=>[r,g[0][1]*Math.pow(r,-0.25)])});
-  plot($('gC'),{logx:true,logy:true,series:ser,xlabel:'distance r',ylabel:'g(r)'});
+  plot($('gC'),{logx:true,logy:true,series:ser,xlabel:tr('distance r','거리 r'),ylabel:'g(r)'});
 }
 /* The live lattice runs only while the user wants it running (LV.running), its figures are on screen and the tab
    is visible; otherwise no frame is scheduled. prefers-reduced-motion pauses at load and whenever it is switched
@@ -548,7 +566,7 @@ const RM=matchMedia('(prefers-reduced-motion: reduce)'), onScreen=new Map();
 let raf=0;
 const active=()=>LV.running && !document.hidden && (!onScreen.size || [...onScreen.values()].some(Boolean));
 function kick(){ if (!raf && active()){ LV.acc=0; raf=requestAnimationFrame(liveFrame); } }
-function setRun(on){ LV.running=on; $('runB').textContent=on?'Pause':'Run'; kick(); }
+function setRun(on){ LV.running=on; $('runB').textContent=on?tr('Pause','일시 정지'):tr('Run','실행'); kick(); }
 function liveFrame(){
   raf=0; if (!active()) return;
   if (LS && (LV.acc=(LV.acc||0)+LV.spf)>=1){
@@ -567,9 +585,9 @@ function liveRead(){
   const T=LV.tr*TC; $('tOut').textContent=LV.tr.toFixed(3); $('hOut').textContent=LV.H.toFixed(2);
   $('rT').textContent=T.toFixed(3); $('rM0').textContent= T<TC ? '±'+m0(T).toFixed(4) : '0';
   if (LS && LS.q){ $('rM').textContent=LS.q.m.toFixed(4); $('rE').textContent=LS.q.e.toFixed(4); }
-  $('rMa').textContent= LS && LS.mn ? (LS.mabs/LS.mn).toFixed(4) : '– (no measurement yet)';
-  $('rSw').textContent= !LS ? 0 : LS.wk && LS.flips ? `${LS.sweeps} × ${LS.wk} clusters (${(LS.flips/(LV.L*LV.L)).toFixed(1)} N flipped)` : LS.sweeps;
-  $('spinNote').textContent=`Up spins are white and down spins are black, as in the lecture notes. ${LV.L} × ${LV.L}, periodic boundaries.${LV.alg==='wolff'&&LV.H!==0?' The Wolff rule needs H = 0, so Metropolis is used while the field is on.':''}`;
+  $('rMa').textContent= LS && LS.mn ? (LS.mabs/LS.mn).toFixed(4) : tr('– (no measurement yet)','– (아직 측정 없음)');
+  $('rSw').textContent= !LS ? 0 : LS.wk && LS.flips ? tr(`${LS.sweeps} × ${LS.wk} clusters (${(LS.flips/(LV.L*LV.L)).toFixed(1)} N flipped)`,`${LS.sweeps} × ${LS.wk} 클러스터 (${(LS.flips/(LV.L*LV.L)).toFixed(1)} N개 뒤집힘)`) : LS.sweeps;
+  $('spinNote').textContent=tr(`Up spins are white and down spins are black, as in the lecture notes. ${LV.L} × ${LV.L}, periodic boundaries.`,`강의 노트에서처럼 위 스핀은 흰색, 아래 스핀은 검은색입니다. ${LV.L} × ${LV.L}, 주기 경계 조건.`)+(LV.alg==='wolff'&&LV.H!==0?tr(' The Wolff rule needs H = 0, so Metropolis is used while the field is on.',' 울프 규칙은 H = 0이 필요하므로, 자기장이 켜져 있는 동안은 메트로폴리스를 씁니다.'):'');
 }
 
 
@@ -588,14 +606,14 @@ let running=true, timer=null, lastRef=0;
 function pick(){ let b=null, br=1; sw.forEach(s=>{ const r=s.cnt/BASE; if (r<br){ br=r; b=s; } }); wd.forEach(s=>{ const r=s.cnt/WBASE; if (r<br){ br=r; b=s; } }); return b; }
 function work(){ timer=null; if (!running) return; const t0=performance.now(); let did=false;
   while (performance.now()-t0<9){ const st=pick(); if (!st) break; if (st.kind==='s') swStep(st); else wStep(st); did=true; }
-  if (did){ if (performance.now()-lastRef>900){ drawSweep(); drawWidom(); lastRef=performance.now(); } timer=setTimeout(work,0); } else { drawSweep(); drawWidom(); running=false; $('run').textContent='Resume'; }
+  if (did){ if (performance.now()-lastRef>900){ drawSweep(); drawWidom(); lastRef=performance.now(); } timer=setTimeout(work,0); } else { drawSweep(); drawWidom(); running=false; $('run').textContent=tr('Resume','계속'); }
 }
-function start(){ if (!running){ running=true; $('run').textContent='Pause'; } if (!timer) timer=setTimeout(work,0); }
+function start(){ if (!running){ running=true; $('run').textContent=tr('Pause','일시 정지'); } if (!timer) timer=setTimeout(work,0); }
 const LCOL=L=>({16:C.l16,32:C.l64,64:C.accent})[L];
 function drawSweep(){
   let d=0; sw.forEach(s=>d+=Math.min(s.cnt,BASE)); $('prog').style.width=(100*d/(sw.length*BASE)).toFixed(1)+'%';
-  $('chips').innerHTML=SIZES.map(L=>{ const q=sw.filter(s=>s.L===L); return `<span class="chip"><i class="sw" style="background:${LCOL(L)}"></i>L = ${L} <span style="color:var(--muted)">${Math.min(...q.map(s=>s.cnt))}/${BASE} per T</span></span>`; }).join('');
-  $('stTxt').textContent= pick()?(running?'Sampling…':'Paused'):'Done';
+  $('chips').innerHTML=SIZES.map(L=>{ const q=sw.filter(s=>s.L===L); return `<span class="chip"><i class="sw" style="background:${LCOL(L)}"></i>L = ${L} <span style="color:var(--muted)">${Math.min(...q.map(s=>s.cnt))}/${BASE} ${tr('per T','(T당)')}</span></span>`; }).join('');
+  $('stTxt').textContent= pick()?(running?tr('Sampling…','표집 중…'):tr('Paused','일시 정지됨')):tr('Done','완료');
   const TG=Array.from({length:400},(_,i)=>0.3+i*2.8/399);
   const by=L=>sw.filter(s=>s.L===L&&s.cnt>0);
   const s1=[{color:C.ink,dash:[6,4],width:1.3,pts:TG.map(r=>[r,m0(r*TC)])}], s4=[{color:C.ink,dash:[6,4],width:1.3,pts:TG.map(r=>[r,epsEx(r*TC)])}], s5=[{color:C.ink,dash:[6,4],width:1.3,noScale:true,pts:TG.filter(r=>Math.abs(r-1)>0.0015).map(r=>[r,cEx(r*TC)])}];
@@ -622,7 +640,7 @@ function drawSweep(){
 }
 function drawWidom(){
   let d=0; wd.forEach(s=>d+=Math.min(s.cnt,WBASE)); $('wProg').style.width=(100*d/(wd.length*WBASE)).toFixed(1)+'%';
-  $('wChips').textContent=`Field runs on 64 × 64: ${Math.min(...wd.map(s=>s.cnt))}/${WBASE} measurements per (t, h)`;
+  $('wChips').textContent=tr(`Field runs on 64 × 64: ${Math.min(...wd.map(s=>s.cnt))}/${WBASE} measurements per (t, h)`,`64 × 64에서 자기장 실행: (t, h)마다 측정 ${Math.min(...wd.map(s=>s.cnt))}/${WBASE}회`);
   const b=+$('wB').value, D=+$('wD').value; $('wBo').textContent=b.toFixed(3); $('wDo').textContent=D.toFixed(3);
   const blues=['#9cc1ff','#6f9ef0','#3f74d9','#1f4fd1','#0b2f8f'], reds=['#f4a6bd','#e2738f','#c94b6c','#b4235a','#7a1338'];
   const s1=[], sP=[], sM=[];
@@ -647,17 +665,17 @@ function drawPeierls(){
   const cv=$('peC'), W=cv.clientWidth; if (!W||!PE.s) return; const dpr=window.devicePixelRatio||1; cv.width=Math.round(W*dpr); cv.height=Math.round(W*dpr);
   const ctx=cv.getContext('2d'); ctx.setTransform(dpr,0,0,dpr,0,0); ctx.fillStyle=C.panel; ctx.fillRect(0,0,W,W);
   const L=PE.L, c=W/L, s=PE.s; let n=0, A=0;
-  ctx.font=`${Math.round(c*0.6)}px "Public Sans", system-ui, sans-serif`; ctx.textAlign='center'; ctx.textBaseline='middle';
+  ctx.font=`${Math.round(c*0.6)}px "Public Sans", "IBM Plex Sans KR", system-ui, sans-serif`; ctx.textAlign='center'; ctx.textBaseline='middle';
   for (let i=0;i<L*L;i++){ const x=i%L, y=(i/L)|0; if (s[i]<0){ A++; ctx.fillStyle=C.grid; ctx.fillRect(x*c,y*c,c,c); } ctx.strokeStyle=C.rule; ctx.lineWidth=1; ctx.strokeRect(x*c+.5,y*c+.5,c,c); ctx.fillStyle=s[i]>0?C.muted:C.ink; ctx.fillText(s[i]>0?'↑':'↓',(x+0.5)*c,(y+0.52)*c); }
   ctx.strokeStyle=C.crit; ctx.lineWidth=3; ctx.lineCap='round'; ctx.beginPath();
   for (let y=0;y<L;y++) for (let x=0;x<L;x++){ const i=y*L+x; if (x+1<L && s[i]!==s[i+1]){ n++; ctx.moveTo((x+1)*c,y*c); ctx.lineTo((x+1)*c,(y+1)*c); } if (y+1<L && s[i]!==s[i+L]){ n++; ctx.moveTo(x*c,(y+1)*c); ctx.lineTo((x+1)*c,(y+1)*c); } }
   ctx.stroke();
   const N=L*L;
-  $('peRead').innerHTML=`<dt>Flipped spins in the droplet</dt><dd>${A}</dd><dt>Interface length n (broken bonds)</dt><dd>${n}</dd><dt>Energy cost 2Jn</dt><dd>${2*n}</dd><dt>Entropy bound ln(N3<sup>n</sup>) for N = ${N}</dt><dd>${(Math.log(N)+n*Math.log(3)).toFixed(1)}</dd><dt>Droplet stays unfavorable below T ≈</dt><dd>${(2*n/(Math.log(N)+n*Math.log(3))).toFixed(3)}</dd>`;
+  $('peRead').innerHTML=`<dt>${tr('Flipped spins in the droplet','물방울 안의 뒤집힌 스핀')}</dt><dd>${A}</dd><dt>${tr('Interface length n (broken bonds)','경계면 길이 n (끊어진 결합)')}</dt><dd>${n}</dd><dt>${tr('Energy cost 2Jn','에너지 비용 2Jn')}</dt><dd>${2*n}</dd><dt>${tr(`Entropy bound ln(N3<sup>n</sup>) for N = ${N}`,`N = ${N}에서 엔트로피 상한 ln(N3<sup>n</sup>)`)}</dt><dd>${(Math.log(N)+n*Math.log(3)).toFixed(1)}</dd><dt>${tr('Droplet stays unfavorable below T ≈','물방울이 불리하게 남는 온도 상한 T ≈')}</dt><dd>${(2*n/(Math.log(N)+n*Math.log(3))).toFixed(3)}</dd>`;
 }
 function drawPeN(){
   const Ns=Array.from({length:200},(_,i)=>Math.pow(10,1+i*15/199));
-  plot($('peN'),{x:[10,1e16],logx:true,y:[0,2.5],series:[{color:C.accent,width:2.2,pts:Ns.map(N=>[N,2/(Math.log(3)+Math.log(N)/Math.sqrt(N))])},{color:C.ink,dash:[6,4],width:1.2,pts:[[10,2/Math.log(3)],[1e16,2/Math.log(3)]]},{color:C.crit,width:1.3,pts:[[10,TC],[1e16,TC]]}],xlabel:'N',ylabel:'k_BT bound / J'});
+  plot($('peN'),{x:[10,1e16],logx:true,y:[0,2.5],series:[{color:C.accent,width:2.2,pts:Ns.map(N=>[N,2/(Math.log(3)+Math.log(N)/Math.sqrt(N))])},{color:C.ink,dash:[6,4],width:1.2,pts:[[10,2/Math.log(3)],[1e16,2/Math.log(3)]]},{color:C.crit,width:1.3,pts:[[10,TC],[1e16,TC]]}],xlabel:'N',ylabel:tr('k_BT bound / J','k_BT 하한 / J')});
 }
 
 /* ---------- scaling relations ---------- */
@@ -671,19 +689,19 @@ function drawRel(){
   const k=+$('rk').value;
   const kn1 = preset==='1d' && d===1 ? {α:(2-2/k).toFixed(4),β:'0',γ:(2/k).toFixed(4),δ:'∞'} : null;
   const kn=known||kn1||{};
-  const rows=[['α','2 − α = νd (hyperscaling)',alpha,kn['α']],['β','β = ν(d − 2 + η)/2',beta,kn['β']],['γ','γ = ν(2 − η) (Fisher)',gamma,kn['γ']],['δ','δ = (d + 2 − η)/(d − 2 + η)',delta,kn['δ']],['Δ','Δ = 2 − α − β = βδ (gap exponent)',Delta,null]];
-  $('relTable').innerHTML='<thead><tr><th>Exponent</th><th>From the scaling relations</th><th style="text-align:right">Value</th><th style="text-align:right">Known value</th></tr></thead><tbody>'+
+  const rows=[['α',tr('2 − α = νd (hyperscaling)','2 − α = νd (초스케일링)'),alpha,kn['α']],['β','β = ν(d − 2 + η)/2',beta,kn['β']],['γ',tr('γ = ν(2 − η) (Fisher)','γ = ν(2 − η) (피셔)'),gamma,kn['γ']],['δ','δ = (d + 2 − η)/(d − 2 + η)',delta,kn['δ']],['Δ',tr('Δ = 2 − α − β = βδ (gap exponent)','Δ = 2 − α − β = βδ (간격 지수)'),Delta,null]];
+  $('relTable').innerHTML='<thead><tr><th>'+tr('Exponent','지수')+'</th><th>'+tr('From the scaling relations','스케일링 관계로부터')+'</th><th style="text-align:right">'+tr('Value','값')+'</th><th style="text-align:right">'+tr('Known value','알려진 값')+'</th></tr></thead><tbody>'+
     rows.map(r=>`<tr><td><b>${r[0]}</b></td><td>${r[1]}</td><td class="num">${fmt(r[2])}</td><td class="num">${r[3]||'–'}</td></tr>`).join('')+
-    `<tr><td><b>Checks</b></td><td>α + 2β + γ = 2 (Rushbrooke); β + γ = βδ (Widom)</td><td class="num">${fmt(alpha+2*beta+gamma)}; ${fmt(beta+gamma)} = ${fmt(Delta)}</td><td class="num"></td></tr>`+
-    `<tr><td><b>Ginzburg</b></td><td>(γ + 2β)/ν, the dimension above which mean field holds</td><td class="num">${fmt((gamma+2*beta)/nu)}</td><td class="num"></td></tr></tbody>`;
-  $('relNote').innerHTML = d===4&&nu===0.5&&eta===0 ? 'At d = 4 the mean-field exponents satisfy hyperscaling; above d = 4 hyperscaling fails while the exponents stay at their mean-field values.' :
-    (d===1 ? `For d = 1 with ν = 2/k = ${(2/k).toFixed(3)} and η = 1: β = 0 and δ = ∞, matching m(0, h) = sign(h). With the true exponents (γ + 2β)/ν equals d exactly, so the Ginzburg criterion is marginal; it is the mean-field exponents that need d &gt; 4.` : 'With the true exponents (γ + 2β)/ν equals d exactly, so the Ginzburg criterion is marginal; it is the mean-field exponents that need d &gt; 4.');
+    `<tr><td><b>${tr('Checks','검산')}</b></td><td>${tr('α + 2β + γ = 2 (Rushbrooke); β + γ = βδ (Widom)','α + 2β + γ = 2 (러시브룩); β + γ = βδ (위덤)')}</td><td class="num">${fmt(alpha+2*beta+gamma)}; ${fmt(beta+gamma)} = ${fmt(Delta)}</td><td class="num"></td></tr>`+
+    `<tr><td><b>${tr('Ginzburg','긴즈부르크')}</b></td><td>${tr('(γ + 2β)/ν, the dimension above which mean field holds','(γ + 2β)/ν, 그 위에서 평균장이 성립하는 차원')}</td><td class="num">${fmt((gamma+2*beta)/nu)}</td><td class="num"></td></tr></tbody>`;
+  $('relNote').innerHTML = d===4&&nu===0.5&&eta===0 ? tr('At d = 4 the mean-field exponents satisfy hyperscaling; above d = 4 hyperscaling fails while the exponents stay at their mean-field values.','d = 4에서는 평균장 지수가 초스케일링을 만족합니다. d = 4 위에서는 지수가 평균장 값에 머무는 반면 초스케일링이 깨집니다.') :
+    (d===1 ? tr(`For d = 1 with ν = 2/k = ${(2/k).toFixed(3)} and η = 1: β = 0 and δ = ∞, matching m(0, h) = sign(h). With the true exponents (γ + 2β)/ν equals d exactly, so the Ginzburg criterion is marginal; it is the mean-field exponents that need d &gt; 4.`,`d = 1에서 ν = 2/k = ${(2/k).toFixed(3)}, η = 1이면 β = 0, δ = ∞로 m(0, h) = sign(h)와 맞습니다. 참된 지수에서는 (γ + 2β)/ν가 정확히 d와 같으므로 긴즈부르크 조건은 경계에 있습니다. d &gt; 4가 필요한 것은 평균장 지수입니다.`) : tr('With the true exponents (γ + 2β)/ν equals d exactly, so the Ginzburg criterion is marginal; it is the mean-field exponents that need d &gt; 4.','참된 지수에서는 (γ + 2β)/ν가 정확히 d와 같으므로 긴즈부르크 조건은 경계에 있습니다. d &gt; 4가 필요한 것은 평균장 지수입니다.'));
 }
 function setPreset(p){ preset=p; const P=PRE[p]; $('rd').value=String(P.d); $('kWrap').hidden=p!=='1d'; if (p==='1d'){ const k=+$('rk').value; $('rnu').value=(2/k).toFixed(4); $('reta').value=1; } else { $('rnu').value=P.nu; $('reta').value=P.eta; } $('rko').textContent=(+$('rk').value).toFixed(2); document.querySelectorAll('[data-p]').forEach(b=>b.classList.toggle('primary',b.dataset.p===p)); drawRel(); }
 
 function drawGz(){
   const ts=Array.from({length:100},(_,i)=>Math.pow(10,-4+i*4/99)), cs=[[2,C.crit],[3,C.l16],[4,C.ink],[5,C.accent]];
-  plot($('gz'),{x:[1e-4,1],logx:true,logy:true,y:[1e-3,1e5],series:cs.map(([d,c])=>({color:c,width:2,pts:ts.map(t=>[t,Math.pow(t,d/2-2)])})),xlabel:'−t',ylabel:'relative fluctuation'});
+  plot($('gz'),{x:[1e-4,1],logx:true,logy:true,y:[1e-3,1e5],series:cs.map(([d,c])=>({color:c,width:2,pts:ts.map(t=>[t,Math.pow(t,d/2-2)])})),xlabel:'−t',ylabel:tr('relative fluctuation','상대 요동')});
 }
 
 /* ---------- wiring ---------- */
@@ -699,7 +717,7 @@ const io=new IntersectionObserver(es=>{ es.forEach(e=>onScreen.set(e.target,e.is
 document.addEventListener('visibilitychange',kick);
 RM.addEventListener('change',e=>{ if (e.matches) setRun(false); });
 $('rnd').onclick=()=>liveReset('random'); $('allUp').onclick=()=>liveReset('up'); $('allDn').onclick=()=>liveReset('down');
-$('run').onclick=()=>{ if (running){ running=false; $('run').textContent='Resume'; $('stTxt').textContent=pick()?'Paused':'Done'; } else { start(); $('stTxt').textContent=pick()?'Sampling…':'Done'; } };
+$('run').onclick=()=>{ if (running){ running=false; $('run').textContent=tr('Resume','계속'); $('stTxt').textContent=pick()?tr('Paused','일시 정지됨'):tr('Done','완료'); } else { start(); $('stTxt').textContent=pick()?tr('Sampling…','표집 중…'):tr('Done','완료'); } };
 $('more').onclick=()=>{ BASE*=2; WBASE*=2; start(); };
 ['wB','wD'].forEach(id=>$(id).addEventListener('input',drawWidom));
 $('wExact').onclick=()=>{ $('wB').value=0.125; $('wD').value=1.875; drawWidom(); };
@@ -711,6 +729,7 @@ $('rk').addEventListener('input',()=>{ setPreset('1d'); });
 let rz=0;
 const ro=new ResizeObserver(()=>{ if (rz) return; rz=requestAnimationFrame(()=>{ rz=0; renderSpins(); liveCharts(); drawSweep(); drawWidom(); drawPeierls(); drawPeN(); drawGz(); }); });
 document.querySelectorAll('figure, .plate, #peC').forEach(el=>ro.observe(el));
+window.addEventListener('langchange',()=>{ $('runB').textContent=LV.running?tr('Pause','일시 정지'):tr('Run','실행'); $('run').textContent=running?tr('Pause','일시 정지'):tr('Resume','계속'); $('stTxt').textContent=pick()?(running?tr('Sampling…','표집 중…'):tr('Paused','일시 정지됨')):tr('Done','완료'); liveRead(); renderSpins(); liveCharts(); drawSweep(); drawWidom(); drawPeierls(); drawPeN(); drawRel(); drawGz(); });
 matchMedia('(prefers-color-scheme: dark)').addEventListener('change',()=>{ readColors(); renderSpins(); drawSweep(); drawWidom(); drawPeierls(); drawPeN(); drawGz(); });
 new MutationObserver(()=>{ readColors(); renderSpins(); drawSweep(); drawWidom(); drawPeierls(); drawPeN(); drawGz(); }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
 
@@ -726,13 +745,148 @@ setTimeout(start,500);
   const SUN = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg>';
   const MOON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11z"/></svg>';
   const current = () => root.dataset.theme || (mq.matches ? "dark" : "light");
-  const sync = () => { const dark = current() === "dark", label = dark ? "Switch to light mode" : "Switch to dark mode";
+  const sync = () => { const dark = current() === "dark", label = dark ? tr("Switch to light mode","밝은 화면으로 전환") : tr("Switch to dark mode","어두운 화면으로 전환");
     btn.innerHTML = dark ? SUN : MOON; btn.setAttribute("aria-label", label); btn.title = label; };
   btn.addEventListener("click", () => { const next = current() === "dark" ? "light" : "dark"; root.dataset.theme = next;
     try { localStorage.setItem("netsci-theme", next); } catch (e) {} sync(); });
   mq.addEventListener("change", sync);
+  window.addEventListener("langchange", sync);
   sync();
 })();
 </script>
+<!-- lang-toggle:body -->
+<script>
+window.I18N_KO={
+"__title": "2차원 이징(Ising) 모형",
+"k1": "2차원 이징(Ising) 모형",
+"k2": "정사각 격자 위의 이징(Ising) 모형은 T<sub>c<\/sub> = 2J/[k<sub>B<\/sub> ln(1 + <span class=\"rad\"><span class=\"rs\">√<\/span><span class=\"rc\">2<\/span><\/span>)] ≈ 2.269J/k<sub>B<\/sub>에서 진짜 상전이를 보이며, 1944년 온사거가 정확히 풀었습니다. 그 임계 지수 β = 1/8, γ = 7/4, 그리고 로그 발산을 갖는 α = 0은 평균장 값과 크게 다릅니다. 정확한 결과를 시뮬레이션과 비교하고, d = 1은 질서를 가질 수 없는데 d = 2는 왜 질서를 갖는지에 대한 파이얼스 논증, 위덤의 스케일링 가설과 데이터 겹침, 임계 지수 사이의 스케일링 관계, 그리고 d = 4를 상임계 차원으로 만드는 긴즈부르크 판정 조건을 살펴보세요.",
+"k3": "이상훈 교수의 2장 강의 노트를 바탕으로 하며, K. Christensen and N. R. Moloney, <i>Complexity and Criticality<\/i> (2005)를 따릅니다. 단위: k<sub>B<\/sub> = 1, J = 1. <a href=\"#references\" style=\"color:var(--accent)\">참고문헌<\/a>",
+"k4": "외부 자기장 H",
+"k5": "격자",
+"k6": "갱신 규칙",
+"k7": "메트로폴리스 (단일 스핀)",
+"k8": "울프 (클러스터, H = 0에서만)",
+"k9": "속도",
+"k10": "느리게: 초당 약 6 스윕",
+"k11": "보통: 초당 약 15 스윕",
+"k12": "프레임당 1 스윕 (초당 약 60)",
+"k13": "프레임당 4 스윕",
+"k14": "프레임당 16 스윕",
+"k15": "무작위 시작 (T = ∞)",
+"k16": "모두 위로",
+"k17": "모두 아래로",
+"k18": "온도 T (단위 J/k<sub>B<\/sub>)",
+"k19": "스핀당 자화 m",
+"k20": "|m|의 시간 평균",
+"k21": "무한 격자에 대한 온사거의 m<sub>0<\/sub>(T)",
+"k22": "스핀당 에너지 ε",
+"k23": "마지막 변경 후 스윕 수",
+"k24": "<b>시간에 따른 스핀당 자화<\/b>T<sub>c<\/sub> 아래에서 작은 격자는 가끔 +m과 −m 사이를 뒤집히지만 (점선: 온사거의 ±m<sub>0<\/sub>), 큰 격자는 그대로 머뭅니다.",
+"k25": "<b>시간에 따른 m의 분포<\/b>T<sub>c<\/sub> 위에서는 m = 0에 봉우리 하나, 아래에서는 ±m<sub>0<\/sub>에 봉우리 둘, T<sub>c<\/sub>에서는 넓게 퍼진 분포입니다.",
+"k26": "<b>이 격자의 스핀–스핀 상관 함수 g(r)<\/b>g(r) = ⟨s<sub>i<\/sub>s<sub>i+r<\/sub>⟩ − ⟨|m|⟩², 두 축 방향으로 시간 평균한 값. 로그–로그. 점선: T<sub>c<\/sub>에서의 감쇠인 r<sup>−(d−2+η)<\/sup> = r<sup>−1/4<\/sup>.",
+"k27": "온사거의 정확한 풀이",
+"k28": "영 자기장에서 분배함수는 Z(T, 0) = [2 cosh(2K) e<sup>I<\/sup>]<sup>N<\/sup>이며, 여기서 환산 결합 상수는 K = J/k<sub>B<\/sub>T이고 I = (1/2π)∫<span class=\"ss\"><sup>π<\/sup><sub>0<\/sub><\/span> ln{[1 + <span class=\"rad\"><span class=\"rs\">√<\/span><span class=\"rc\">1 − κ² sin²φ<\/span><\/span>]/2} dφ, κ = 2 sinh(2K)/cosh²(2K)입니다. 이로부터 자발 자화(Yang, 1952), 에너지, 비열이 나옵니다:",
+"k31": "F와 E는 제1종, 제2종 완전 타원 적분입니다. T<sub>c<\/sub>에서 κ = 1이 되어 F가 로그로 발산하고, κ′의 부호가 바뀌어 ε에 꺾임이 생깁니다. 따라서 t = (T − T<sub>c<\/sub>)/T<sub>c<\/sub>에 대해 c ≈ −(8/π)K<sub>c<\/sub>² ln|t| + 상수입니다: α = 0이지만, 이번에는 불연속 대신 로그 발산입니다. H ≠ 0에서 Z를 모르므로 χ는 정확히 알려져 있지 않지만, χ ≈ Γ<sup>±<\/sup>|t|<sup>−7/4<\/sup>이고 Γ<sup>+<\/sup> ≈ 0.42420, Γ<sup>−<\/sup> ≈ 0.011254이므로 Γ<sup>+<\/sup>/Γ<sup>−<\/sup> ≈ 37.69로, 평균장의 2와 크게 다릅니다.",
+"k32": "아래 시뮬레이션은 L × L 격자에서 볼츠만 가중치로 미시상태를 표집합니다(H = 0에서는 울프 클러스터 갱신). 유한한 N에서는 계가 에르고딕하게 남아 ⟨m⟩ = 0이므로, ⟨|M|⟩/N을 기록합니다. T<sub>c<\/sub> 아래에서는 감수율을 k<sub>B<\/sub>Tχ<sub>abs<\/sub> = (⟨M²⟩ − ⟨|M|⟩²)/N으로 잡는데, 이는 두 질서 상태 사이의 뒤집힘을 없애고 L ≫ ξ일 때 한 상 안에서의 응답을 근사합니다. T<sub>c<\/sub> 위에서는 표준적인 k<sub>B<\/sub>Tχ = (⟨M²⟩ − ⟨M⟩²)/N을 씁니다. 대칭적인 고온 분포에서도 ⟨|M|⟩²이 사라지지 않아 χ<sub>abs<\/sub>가 Γ<sup>+<\/sup>|t|<sup>−7/4<\/sup>보다 체계적으로 낮게 나오기 때문입니다. 비열: k<sub>B<\/sub>T²c = (⟨E²⟩ − ⟨E⟩²)/N. 울프 측정은 뒤집힌 자리 수가 아니라 일정한 횟수의 클러스터 갱신(≈ N/⟨C⟩, 200번의 평형화 스윕 동안 보정한 뒤 고정) 뒤에 이루어집니다. 뒤집힌 자리 수를 기준으로 하면 측정 시간이 상태에 따라 달라져 평균이 치우치기 때문입니다.",
+"k33": "표본 더 추가",
+"k34": "<b>자발 자화<\/b>점: 각 L에 대한 ⟨|M|⟩/N. 점선: 온사거–양 m<sub>0<\/sub>(T).",
+"k35": "<b>m<sub>0<\/sub> ∝ (−t)<sup>β<\/sup>, β = 1/8<\/b>로그–로그. 선: 정확한 값. T<sub>c<\/sub> 가까이에서 점이 평평해지는데, ξ가 L보다 커지면서 생기는 유한 크기 효과입니다.",
+"k36": "<b>χ ∝ |t|<sup>−γ<\/sup>, γ = 7/4<\/b>로그–로그. 가장 큰 L에 대해 T<sub>c<\/sub> 위(파랑, 표준 χ)와 아래(빨강, χ<sub>abs<\/sub>)의 점. 점선: Γ<sup>±<\/sup>|t|<sup>−7/4<\/sup>로, 37.7배 차이가 납니다.",
+"k37": "<b>스핀당 에너지 ε(T)<\/b>점선: 정확한 값. T = 0에서 −2J부터 T = ∞에서 0까지 가며, T<sub>c<\/sub>에서 꺾입니다.",
+"k38": "<b>비열 c(T)<\/b>점선: 정확한 값으로, T<sub>c<\/sub>에서 날카로운 로그 봉우리를 가집니다. 그 밖에서는 시뮬레이션과 거의 구별되지 않습니다.",
+"k39": "<b>c의 로그 발산<\/b>|t|를 로그 눈금으로 한 정확한 c, T<sub>c<\/sub> 위(파랑)와 아래(빨강): ln|t| 한 단위당 기울기 −(8/π)K<sub>c<\/sub>² ≈ −0.494인 직선입니다.",
+"k40": "왜 상전이가 있는가: 파이얼스 논증",
+"k41": "이징은 사슬로부터 어떤 차원에서도 상전이가 없다고 결론지었습니다. 파이얼스는 1936년에 반대로 논증했습니다. 정렬된 단일 자구와, 경계면으로 둘러싸인 n개의 뒤집힌 스핀으로 된 두 번째 자구를 가진 격자를 비교합시다. 2차원에서 경계면은 끊어진 결합마다 2J의 비용이 들므로 에너지는 그 길이 n에 비례해 커지고, 엔트로피는 경계면의 개수 Ω(n)으로 정해집니다. 각 경계면을 바로 되돌아가지 않는 걸음으로 세고 가능한 위치가 N개라 하면 Ω(n) &lt; N3<sup>n<\/sup>으로, 크게 부풀린 어림입니다. 비슷한 크기의 조밀한 자구에서는 n ∝ <span class=\"rad\"><span class=\"rs\">√<\/span><span class=\"rc\">N<\/span><\/span>이므로",
+"k43": "이 값이 양수이면, 즉 k<sub>B<\/sub>T &lt; 2J/[ln 3 + (ln N)/<span class=\"rad\"><span class=\"rs\">√<\/span><span class=\"rc\">N<\/span><\/span>]이면 질서 상태가 안정합니다. N → ∞이면 (ln N)/<span class=\"rad\"><span class=\"rs\">√<\/span><span class=\"rc\">N<\/span><\/span> → 0이므로 T<sub>c<\/sub> &gt; 2J/(k<sub>B<\/sub> ln 3) ≈ 1.820입니다: 0이 아닌 온도에서 반드시 상전이가 있어야 합니다. 1차원에서는 물방울의 비용이 크기와 상관없이 4J이고, 언제나 엔트로피 k<sub>B<\/sub>T ln[2N(N − 1)]에 집니다.",
+"k44": "<b>뒤집힌 스핀의 물방울<\/b>그 경계면(빨강)은 끊어진 결합 n개를 가지며 비용은 2Jn입니다. 격자를 클릭하면 새 물방울이 생깁니다.",
+"k45": "<b>N에 대한 T<sub>c<\/sub>의 파이얼스 하한<\/b>파랑: 2J/[ln 3 + (ln N)/<span class=\"rad\"><span class=\"rs\">√<\/span><span class=\"rc\">N<\/span><\/span>]. 2/ln 3 ≈ 1.820 (점선)에 다가가며, 정확한 T<sub>c<\/sub> ≈ 2.269 (빨강)보다 넉넉히 아래에 있습니다.",
+"k46": "위덤의 스케일링 가설",
+"k47": "평균장 이론은 낮은 차원에서 실패하므로 더 일반적인 틀이 필요합니다. 환산 변수 t = (T − T<sub>c<\/sub>)/T<sub>c<\/sub>와 h = H/k<sub>B<\/sub>T를 쓰면 임계점은 (t, h) = (0, 0)입니다. 자유 에너지는 정칙 부분과 뾰족점을 만드는 특이 부분으로 나뉘며, 위덤은 다음과 같이 주장했습니다.",
+"k48": "f<sub>s<\/sub>(t, h) = |t|<sup>2−α<\/sup> 𝓕<sub>±<\/sub>(h/|t|<sup>Δ<\/sup>),  m(t, h) = |t|<sup>β<\/sup> 𝓜<sub>±<\/sub>(h/|t|<sup>Δ<\/sup>)  (t → 0<sup>±<\/sup>, h → 0)",
+"k49": "Δ는 간격 지수이고, 𝓜<sub>±<\/sub>는 t &gt; 0과 t &lt; 0에 대한 홀함수 스케일링 함수입니다. x = h/|t|<sup>Δ<\/sup> → 0이면 𝓜<sub>+<\/sub> → 0이고 𝓜<sub>−<\/sub> → ± (0이 아닌 상수)이며, x → ±∞이면 𝓜<sub>±<\/sub> ∝ sign(x)|x|<sup>1/δ<\/sup>이므로 Δ = βδ여야 합니다. 따라서 m/|t|<sup>β<\/sup>를 h/|t|<sup>Δ<\/sup>에 대해 그리면, 여러 t와 h의 데이터가 단 두 곡선 위에 놓입니다. 이 페이지는 자기장을 허용하는 메트로폴리스 갱신으로 64 × 64 격자를 10개 온도와 4개 자기장에서 시뮬레이션합니다. 지수를 β = 1/8, Δ = 15/8에서 벗어나게 움직이면 겹침이 깨집니다.",
+"k50": "<b>원 데이터: h에 대한 m<\/b>로그–로그. 선 하나가 t 하나입니다: T<sub>c<\/sub> 위(파란 계열)와 아래(빨간 계열).",
+"k51": "<b>겹침: h/|t|<sup>Δ<\/sup>에 대한 m/|t|<sup>β<\/sup><\/b>파랑: t &gt; 0은 𝓜<sub>+<\/sub>를 그립니다. 빨강: t &lt; 0은 𝓜<sub>−<\/sub>를 그립니다. 점선: 큰 x에서의 기울기 1/δ = 1/15.",
+"k52": "2차원 정확한 값 (β = 1/8, Δ = 15/8)",
+"k53": "평균장 (β = 1/2, Δ = 3/2)",
+"k54": "가설을 미분하면 다른 양들이 나옵니다: ∂f<sub>s<\/sub>/∂h로 얻은 m에서 2 − α − Δ = β, ∂²f<sub>s<\/sub>/∂h²로 얻은 χ에서 2 − α − 2Δ = −γ, 그리고 c = |t|<sup>−α<\/sup>𝒞<sub>±<\/sub>(h/|t|<sup>Δ<\/sup>)입니다. 상관 함수도 비슷한 꼴 g(r, t, h) ∝ r<sup>−(d−2+η)<\/sup>𝒢<sub>±<\/sub>(r/ξ, h/|t|<sup>Δ<\/sup>)를 따르며, 𝒢는 r ≪ ξ에서 상수이고 r ≫ ξ에서 ∝ (r/ξ)<sup>[η+(d−3)]/2<\/sup>e<sup>−r/ξ<\/sup>입니다. 1차원에서는 η = 1이고 𝒢 = e<sup>−r/ξ<\/sup>로, 거듭제곱 부분이 전혀 없습니다.",
+"k55": "스케일링 관계",
+"k56": "여섯 임계 지수는 독립적이지 않습니다: 모두 뾰족점 근처의 같은 비해석적 자유 에너지 곡면을 기술하기 때문입니다. Δ = βδ, 2 − α − Δ = β, 2 − α − 2Δ = −γ로부터 β + γ = βδ (위덤)와 α + 2β + γ = 2 (러시브룩)가 나옵니다. 합 규칙 k<sub>B<\/sub>Tχ = ∫g dr은 γ = ν(2 − η) (피셔)를 주고, f<sub>s<\/sub> ∝ ξ<sup>−d<\/sup>는 d ≤ 4에서만 성립하는 초스케일링 관계 2 − α = νd (조지프슨)를 줍니다. 따라서 독립적인 지수는 두 개뿐입니다. ν, η, d를 고르면 나머지가 정해집니다:",
+"k57": "2차원 정확한 값",
+"k58": "3차원 수치 값",
+"k59": "평균장 (d = 4)",
+"k60": "d = 1 (k 포함)",
+"k61": "d = 1에서 환산 온도 t = e<sup>−kJ/k<sub>B<\/sub>T<\/sup>의 k",
+"k62": "보편적이지 않은 T<sub>c<\/sub>, 보편적인 임계 지수",
+"k63": "퍼콜레이션의 p<sub>c<\/sub>처럼 T<sub>c<\/sub>는 격자에 따라 달라지며, T<sub>c<\/sub> ∝ z인 평균장 이론에서도 그렇습니다. 임계 지수는 차원에만 의존합니다.",
+"k64": "격자",
+"k65": "<b>d = 1, 직선<\/b>",
+"k66": "<b>d = 2, 육각<\/b>",
+"k68": "<b>d = 2, 정사각<\/b>",
+"k70": "<b>d = 2, 삼각<\/b>",
+"k72": "<b>d = 3, 다이아몬드<\/b>",
+"k73": "<b>d = 3, 단순 입방<\/b>",
+"k74": "<b>d = 3, 체심 입방<\/b>",
+"k75": "<b>d = 3, 면심 입방<\/b>",
+"k76": "<b>평균장<\/b>",
+"k77": "지수",
+"k78": "물리량",
+"k79": "평균장",
+"k80": "0 (로그)",
+"k81": "0 (불연속)",
+"k83": "* 1차원에서는 T<sub>c<\/sub> = 0이므로, 임의의 상수 k &gt; 0에 대해 환산 “온도” t = exp(−kJ/k<sub>B<\/sub>T)를 썼습니다. 이 지수들은 다소 인위적입니다: T − T<sub>c<\/sub>가 아니라 이 t에 대한 거듭제곱 법칙을 기술하며, α, γ, ν는 k에 의존합니다. d = 3의 값은 수치 결과이며, 괄호 안은 마지막 자리의 불확도입니다.",
+"k84": "긴즈부르크 판정 조건과 상임계 차원",
+"k85": "d ≥ 4에서는 평균장 이론이 임계 지수와 맞는데, 이는 높은 차원에서 요동이 더 이상 중요하지 않음을 시사합니다. 평균장이 무시한 에너지는 ΔE = −J Σ<sub>⟨ij⟩<\/sub>(s<sub>i<\/sub> − ⟨s<sub>i<\/sub>⟩)(s<sub>j<\/sub> − ⟨s<sub>j<\/sub>⟩)이고, 합 규칙에 의해 스핀당 |⟨ΔE⟩| = (Jz/2)k<sub>B<\/sub>Tχ입니다. 평균장이 성립하려면 이것이 평균장 에너지 (Jz/2)Nm²에 비해 작아야 하므로 Nk<sub>B<\/sub>Tχ ≪ (Nm)², 간단히 <span class=\"rad\"><span class=\"rs\">√<\/span><span class=\"rc\">⟨M²⟩ − ⟨M⟩²<\/span><\/span> ≪ ⟨M⟩입니다. 상관 부피 ξ<sup>d<\/sup> ∝ |t|<sup>−νd<\/sup> 안에서 이 비는 (−t)<sup>νd − γ − 2β<\/sup>처럼 변하므로, t → 0<sup>−<\/sup>에서 작게 남으려면 다음이 필요합니다.",
+"k86": "평균장 값 β = 1/2, γ = 1, ν = 1/2를 넣으면 d &gt; 4입니다: d<sub>u<\/sub> = 4가 상임계 차원이며, 그 위에서는 평균장 이론이 올바른 임계 지수를 줍니다. 3차원 이하에서는 T<sub>c<\/sub>에 충분히 가까우면 이 조건이 반드시 깨지지만, 제1종 초전도체처럼 실제로는 평균장이 여전히 좋은 근사일 수 있습니다(긴즈부르크, 2003년 노벨상).",
+"k87": "<b>평균장 지수에서의 상대 요동<\/b>−t에 대한 (−t)<sup>d/2 − 2<\/sup>, 로그–로그, d = 2 (빨강), 3, 4 (진한 색), 5 (파랑). d &lt; 4이면 t → 0<sup>−<\/sup>에서 요동이 폭발하여 평균장이 모순되고, d = 4에서는 경계에 머물며, 그 위에서는 사라집니다.",
+"k88": "참고문헌",
+"k89": "<b>핵심 참고문헌.<\/b> K. Christensen and N. R. Moloney, <i>Complexity and Criticality<\/i>, Imperial College Press, London (2005), Chapter 2.",
+"k99": "시뮬레이션은 주기 경계 조건의 정사각 격자에서 메트로폴리스와 울프 갱신을 씁니다. 정확한 곡선은 산술–기하 평균으로 계산한 완전 타원 적분을 씁니다.",
+"k100": "이상훈 교수의 강의 노트를 바탕으로 Claude Opus 5.5가 만들었습니다.",
+"k29": "m<sub>0<\/sub> = [1 − sinh<sup>−4<\/sup>(2K)]<sup>1/8<\/sup> ≈ [4<span class=\"rad\"><span class=\"rs\">√<\/span><span class=\"rc\">2<\/span><\/span> ln(1 + <span class=\"rad\"><span class=\"rs\">√<\/span><span class=\"rc\">2<\/span><\/span>)]<sup>1/8<\/sup> [(T<sub>c<\/sub> − T)/T<sub>c<\/sub>]<sup>1/8<\/sup>,  ε = −J coth(2K)[1 + (2/π)κ′F(κ)]",
+"k30": "c/k<sub>B<\/sub> = (4/π)K² coth²(2K){F(κ) − E(κ) − sech²(2K)[π/2 + κ′F(κ)]},  κ′ = 2 tanh²(2K) − 1",
+"k42": "F<sub>2-dom<\/sub> − F<sub>1-dom<\/sub> = 2Jn − k<sub>B<\/sub>T ln Ω(n) &gt; 2J<span class=\"rad\"><span class=\"rs\">√<\/span><span class=\"rc\">N<\/span><\/span> − k<sub>B<\/sub>T ln(N3<sup><span class=\"rad\"><span class=\"rs\">√<\/span><span class=\"rc\">N<\/span><\/span><\/sup>)",
+"k67": "2/ln(2 + <span class=\"rad\"><span class=\"rs\">√<\/span><span class=\"rc\">3<\/span><\/span>) ≈ 1.519",
+"k69": "2/ln(1 + <span class=\"rad\"><span class=\"rs\">√<\/span><span class=\"rc\">2<\/span><\/span>) ≈ 2.269",
+"k71": "4/ln 3 ≈ 3.641",
+"k82": "m(0, h) ∝ sign(h)|h|<sup>1/δ<\/sup>",
+"k90": "L. Onsager, “Crystal statistics. I. A two-dimensional model with an order-disorder transition,” <i>Phys. Rev.<\/i> <b>65<\/b>, 117 (1944).",
+"k91": "C. N. Yang, “The spontaneous magnetization of a two-dimensional Ising model,” <i>Phys. Rev.<\/i> <b>85<\/b>, 808 (1952).",
+"k92": "H. A. Kramers and G. H. Wannier, “Statistics of the two-dimensional ferromagnet. Part I,” <i>Phys. Rev.<\/i> <b>60<\/b>, 252 (1941).",
+"k93": "R. Peierls, “On Ising’s model of ferromagnetism,” <i>Proc. Cambridge Philos. Soc.<\/i> <b>32<\/b>, 477 (1936).",
+"k94": "B. Widom, “Equation of state in the neighborhood of the critical point,” <i>J. Chem. Phys.<\/i> <b>43<\/b>, 3898 (1965).",
+"k95": "K. Huang, <i>Statistical Mechanics<\/i>, 2nd ed., Wiley (1987), Chapters 14 and 15.",
+"k96": "N. Metropolis, A. W. Rosenbluth, M. N. Rosenbluth, A. H. Teller and E. Teller, “Equation of state calculations by fast computing machines,” <i>J. Chem. Phys.<\/i> <b>21<\/b>, 1087 (1953).",
+"k97": "U. Wolff, “Collective Monte Carlo updating for spin systems,” <i>Phys. Rev. Lett.<\/i> <b>62<\/b>, 361 (1989).",
+"k98": "R. J. Baxter, <i>Exactly Solved Models in Statistical Mechanics<\/i>, Academic Press (1982)."
+};
+(function(){
+  // English / 한국어 switch shared by the course demos; the choice is remembered across pages
+  var KEY='lshlj82-demo-lang', root=document.documentElement, KO=window.I18N_KO||{}, EN={};
+  var els=[].slice.call(document.querySelectorAll('[data-k]'));
+  els.forEach(function(e){EN[e.getAttribute('data-k')]=e.innerHTML;});
+  var titleEN=document.title;
+  var btn=document.createElement('button');btn.id='langBtn';btn.type='button';document.body.appendChild(btn);
+  function typeset(list){
+    if(!list.length)return;
+    if(window.MathJax&&MathJax.typesetPromise){var go=function(){MathJax.typesetPromise(list).catch(function(){});};
+      if(MathJax.startup&&MathJax.startup.promise)MathJax.startup.promise.then(go);else go();}
+    if(window.renderMathInElement&&window.KATEX_OPTS)list.forEach(function(e){try{renderMathInElement(e,window.KATEX_OPTS)}catch(_){}}); 
+  }
+  function apply(l,first){
+    window.LANG=l;root.dataset.lang=l;root.lang=l;var changed=[];
+    els.forEach(function(e){var k=e.getAttribute('data-k'),s=(l==='ko'&&KO[k]!=null)?KO[k]:EN[k];if(e.innerHTML!==s){e.innerHTML=s;changed.push(e);}});
+    document.title=(l==='ko'&&KO.__title)?KO.__title:titleEN;
+    btn.textContent=l==='ko'?'EN':'한국어';btn.setAttribute('aria-label',l==='ko'?'View in English':'한국어로 보기');btn.title=btn.getAttribute('aria-label');
+    btn.setAttribute('lang',l==='ko'?'en':'ko');
+    if(!first)typeset(changed);
+    window.dispatchEvent(new CustomEvent('langchange',{detail:{lang:l}}));
+    // canvases drawn before the Korean web font arrives are redrawn once it has loaded
+    if(l==='ko'&&document.fonts&&!document.fonts.check('16px "IBM Plex Sans KR"','가'))document.fonts.load('16px "IBM Plex Sans KR"','가').then(function(){if(window.LANG==='ko')window.dispatchEvent(new CustomEvent('langchange',{detail:{lang:'ko'}}));}).catch(function(){});
+  }
+  btn.addEventListener('click',function(){var n=window.LANG==='ko'?'en':'ko';try{localStorage.setItem(KEY,n)}catch(e){}apply(n,false);});
+  apply(window.LANG||'en',true);
+})();
+</script>
+<!-- lang-toggle:body-end -->
 </body>
 </html>
